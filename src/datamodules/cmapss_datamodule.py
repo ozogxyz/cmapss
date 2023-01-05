@@ -1,3 +1,4 @@
+from typing import Any
 import rul_datasets
 from rul_datasets.reader.cmapss import CmapssReader
 from rul_datasets.core import RulDataModule
@@ -10,8 +11,9 @@ class CMAPSSDataModule(RulDataModule):
     """Inherits from :class:`~rul_datasets.core.RulDataModule`"""
 
     def __init__(self, data_dir: str, fd: int, batch_size: int) -> None:
-        # change data download destionation from ~/.rul_datasets to project
-        rul_datasets.reader.data_root.set_data_root(data_root=data_dir)
+        # change data download destionation from ~/.rul_datasets to project        
+        # print(rul_datasets.reader.data_root._DATA_ROOT)
+        
         super().__init__(reader=CmapssReader(fd=1), batch_size=batch_size)
 
         # this line allows to access init params with 'self.hparams' attribute
