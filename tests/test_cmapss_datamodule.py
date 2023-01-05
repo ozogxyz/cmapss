@@ -1,9 +1,7 @@
 from pathlib import Path
 
 import pytest
-import torch
 
-from typing import List, Tuple, Union
 from src.datamodules.cmapss_datamodule import CMAPSSDataModule
 
 
