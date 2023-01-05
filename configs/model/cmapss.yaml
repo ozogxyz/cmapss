@@ -16,7 +16,7 @@ scheduler:
 net:
   _target_: src.models.components.cnn_lstm_net.CNNLSTMNet
   conv1_size: 14
-  conv2_size: 32
+  conv2_size: 14
   conv1_kernel: 5
   conv1_stride: 2
   conv2_kernel: 3

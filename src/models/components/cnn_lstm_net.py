@@ -36,17 +36,35 @@ class CNNLSTMNet(Module):
             nn.BatchNorm1d(conv2_size),
             nn.ReLU(),
             nn.MaxPool1d(kernel_size=2, stride=1),
+            nn.Dropout(p=0.2),
+            nn.Conv1d(
+                in_channels=conv2_size,
+                out_channels=conv2_size,
+                kernel_size=conv2_kernel,
+                stride=conv2_stride,
+                padding=conv2_padding,
+            ),
+            nn.BatchNorm1d(conv2_size),
+            nn.ReLU(),
+            nn.MaxPool1d(kernel_size=2, stride=1),
+            
         )
 
-        self.lstm = nn.LSTM(
-            input_size=16, hidden_size=128, num_layers=1, batch_first=True
-        )
+        # self.lstm = nn.LSTM(
+        #     input_size=16, hidden_size=128, num_layers=1, batch_first=True
+        # )
 
-        self.fc = nn.Linear(4096, 1)
+        self.fc = nn.Linear(238, 1)
+
+    # def forward(self, x: torch.Tensor) -> torch.Tensor:
+    #     x = self.feature_extractor(x)
+    #     x, _ = self.lstm(x)
+    #     x = x.reshape(x.size(0), -1)
+    #     x = self.fc(x)
+    #     return x
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.feature_extractor(x)
-        x, _ = self.lstm(x)
         x = x.reshape(x.size(0), -1)
         x = self.fc(x)
         return x

@@ -4,7 +4,7 @@
 # python train.py -m hparams_search=mnist_optuna experiment=example
 
 defaults:
-  - override /hydra/sweeper: optuna
+  - override /hydra/sweeper: basic
 
 # choose metric which will be optimized by Optuna
 # make sure this is the correct name of some metric logged in lightning module!

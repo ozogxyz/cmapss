@@ -61,7 +61,7 @@ def test_optuna_sweep(tmp_path):
     command = [
         startfile,
         "-m",
-        "hparams_search=mnist_optuna",
+        "hparams_search=cmapss_optuna",
         "hydra.sweep.dir=" + str(tmp_path),
         "hydra.sweeper.n_trials=10",
         "hydra.sweeper.sampler.n_startup_trials=5",
@@ -77,7 +77,7 @@ def test_optuna_sweep_ddp_sim_wandb(tmp_path):
     command = [
         startfile,
         "-m",
-        "hparams_search=mnist_optuna",
+        "hparams_search=cmapss_optuna",
         "hydra.sweep.dir=" + str(tmp_path),
         "hydra.sweeper.n_trials=5",
         "trainer=ddp_sim",

@@ -8,7 +8,7 @@ from torchmetrics.regression.mse import MeanSquaredError
 
 class CMAPSSModule(LightningModule):
     """Example of LightningModule for CMAPSS-RUL estimation.
-    
+
         A LightningModule organizes your PyTorch code into 6 sections:
         - Computations (init)
         - Train loop (training_step)
@@ -31,8 +31,8 @@ class CMAPSSModule(LightningModule):
 
         # this line allows to access init params with 'self.hparams' attribute
         # also ensures init params will be stored in ckpt
-        self.save_hyperparameters(logger=False, ignore=['net'])
-        
+        self.save_hyperparameters(logger=False, ignore=["net"])
+
         self.net = net
 
         # loss function
@@ -74,12 +74,16 @@ class CMAPSSModule(LightningModule):
         # update and log metrics
         self.train_loss(loss)
         self.train_rmse(preds, targets)
-        self.log("train/loss", self.train_loss, on_step=False, on_epoch=True, prog_bar=True)
-        self.log("train/rmse", self.train_rmse, on_step=False, on_epoch=True, prog_bar=True)
+        self.log(
+            "train/loss", self.train_loss, on_step=False, on_epoch=True, prog_bar=True
+        )
+        self.log(
+            "train/rmse", self.train_rmse, on_step=False, on_epoch=True, prog_bar=True
+        )
 
         # we can return here dict with any tensors
         # and then read it in some callback or in `training_epoch_end()` below
-        # remember to always return loss from `training_step()` or backpropagation will fail!    
+        # remember to always return loss from `training_step()` or backpropagation will fail!
 
         return {"loss": loss, "preds": preds, "targets": targets}
 
@@ -108,7 +112,7 @@ class CMAPSSModule(LightningModule):
 
     def validation_epoch_end(self, outputs: List[Any]):
         # get current val rmse
-        rmse = self.val_rmse.compute() 
+        rmse = self.val_rmse.compute()
         # update the best val rmse so far
         self.val_rmse_best(rmse)
         # log `val_rmse_best` as a value through `.compute()` method, instead of as a metric object
@@ -121,8 +125,12 @@ class CMAPSSModule(LightningModule):
         # update and log metrics
         self.test_loss(loss)
         self.test_rmse(preds, targets)
-        self.log("test/loss", self.test_loss, on_step=False, on_epoch=True, prog_bar=True)
-        self.log("test/rmse", self.test_rmse, on_step=False, on_epoch=True, prog_bar=True)
+        self.log(
+            "test/loss", self.test_loss, on_step=False, on_epoch=True, prog_bar=True
+        )
+        self.log(
+            "test/rmse", self.test_rmse, on_step=False, on_epoch=True, prog_bar=True
+        )
 
         return {"loss": loss, "preds": preds, "targets": targets}
 
@@ -142,8 +150,8 @@ class CMAPSSModule(LightningModule):
             return {
                 "optimizer": optimizer,
                 "lr_scheduler": scheduler,
-                "monitor": "val/loss"
-            } 
+                "monitor": "val/loss",
+            }
         return {"optimizer": optimizer}
 
 
