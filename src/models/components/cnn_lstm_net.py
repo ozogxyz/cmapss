@@ -10,8 +10,10 @@ class CNNLSTMNet(Module):
         conv2_size: int = 32,
         conv1_kernel: int = 5,
         conv1_stride: int = 2,
+        conv1_padding: int = 2,
         conv2_kernel: int = 3,
         conv2_stride: int = 1,
+        conv2_padding: int = 2,
     ):
         super().__init__()
         self.feature_extractor = Sequential(
@@ -20,6 +22,7 @@ class CNNLSTMNet(Module):
                 out_channels=conv2_size,
                 kernel_size=conv1_kernel,
                 stride=conv1_stride,
+                padding=conv1_padding,
             ),
             nn.BatchNorm1d(conv2_size),
             nn.ReLU(),
@@ -28,6 +31,7 @@ class CNNLSTMNet(Module):
                 out_channels=conv2_size,
                 kernel_size=conv2_kernel,
                 stride=conv2_stride,
+                padding=conv2_padding,
             ),
             nn.BatchNorm1d(conv2_size),
             nn.ReLU(),
@@ -35,7 +39,7 @@ class CNNLSTMNet(Module):
         )
 
         self.lstm = nn.LSTM(
-            input_size=conv2_size, hidden_size=128, num_layers=1, batch_first=True
+            input_size=10, hidden_size=128, num_layers=1, batch_first=True
         )
 
         self.fc = nn.Linear(128, 1)

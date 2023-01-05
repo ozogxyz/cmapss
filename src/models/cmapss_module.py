@@ -25,7 +25,7 @@ class CMAPSSModule(LightningModule):
         self,
         net: torch.nn.Module,
         optimizer: torch.optim.Optimizer,
-        lr_scheduler: torch.optim.lr_scheduler.LambdaLR,
+        scheduler: torch.optim.lr_scheduler.LambdaLR,
     ) -> None:
         super().__init__()
 
@@ -139,13 +139,12 @@ class CMAPSSModule(LightningModule):
             scheduler = self.hparams.scheduler(optimizer)
             return {
                 "optimizer": optimizer,
-                "lr_scheduler": scheduler,
+                "scheduler": scheduler,
                 "monitor": "val_rmse_best",
                 "interval": "epoch",
                 "frequency": 1,
                 # "frequency": self.hparams.scheduler_frequency,
-            },
-        }
+            } 
 
         return {"optimizer": optimizer}
 
