@@ -31,7 +31,7 @@ class CMAPSSModule(LightningModule):
 
         # this line allows to access init params with 'self.hparams' attribute
         # also ensures init params will be stored in ckpt
-        self.save_hyperparameters(logger=False)
+        self.save_hyperparameters(logger=False, ignore=['net'])
         
         self.net = net
 
@@ -61,8 +61,10 @@ class CMAPSSModule(LightningModule):
 
     def step(self, batch: Any):
         x, y = batch
+        # reshape targets from [batch_size] to [batch_size, pred.size(1)] for correct loss
         preds = self.forward(x)
-        loss = self.criterion(y_hat, y)
+        y = y.reshape(y.size(0), preds.size(1))
+        loss = self.criterion(preds, y)
         self.train_loss(loss.item())
         return loss, preds, y
 
@@ -139,13 +141,9 @@ class CMAPSSModule(LightningModule):
             scheduler = self.hparams.scheduler(optimizer)
             return {
                 "optimizer": optimizer,
-                "scheduler": scheduler,
-                "monitor": "val_rmse_best",
-                "interval": "epoch",
-                "frequency": 1,
-                # "frequency": self.hparams.scheduler_frequency,
+                "lr_scheduler": scheduler,
+                "monitor": "val/loss"
             } 
-
         return {"optimizer": optimizer}
 
 

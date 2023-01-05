@@ -39,14 +39,14 @@ class CNNLSTMNet(Module):
         )
 
         self.lstm = nn.LSTM(
-            input_size=10, hidden_size=128, num_layers=1, batch_first=True
+            input_size=16, hidden_size=128, num_layers=1, batch_first=True
         )
 
-        self.fc = nn.Linear(128, 1)
+        self.fc = nn.Linear(4096, 1)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.feature_extractor(x)
         x, _ = self.lstm(x)
-        x = x.view(x.size(0), -1)
+        x = x.reshape(x.size(0), -1)
         x = self.fc(x)
         return x
