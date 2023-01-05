@@ -1,5 +1,3 @@
-from typing import Any
-import rul_datasets
 from rul_datasets.reader.cmapss import CmapssReader
 from rul_datasets.core import RulDataModule
 

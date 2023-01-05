@@ -6,7 +6,7 @@ from src.datamodules.cmapss_datamodule import CMAPSSDataModule
 
 
 @pytest.mark.parametrize("batch_size", [32, 128])
-def test_cmapss_datamodlule(batch_size: int):
+def test_cmapss_datamodule(batch_size: int):
     data_dir = "/Users/oozoglu/.rul-datasets"
     print(data_dir)
 
