@@ -148,6 +148,7 @@ class CMAPSSModule(LightningModule):
             https://pytorch-lightning.readthedocs.io/en/latest/common/lightning_module.html#configure-optimizers
         """
         optimizer = self.hparams.optimizer(params=self.parameters())
+        print(optimizer)
         if self.hparams.scheduler is not None:
             scheduler = self.hparams.scheduler(optimizer)
             return {

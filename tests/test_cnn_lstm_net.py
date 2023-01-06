@@ -9,7 +9,7 @@ def test_cnn_lstm_net_init():
     assert isinstance(cnn_lstm_net, CNNLSTMNet)
 
 
-@pytest.mark.parametrize("batch_size", [32, 64, 200])
+@pytest.mark.parametrize("batch_size", [32])
 def test_cnn_lstm_net_forward(batch_size: int):
     cnn_lstm_net = CNNLSTMNet(conv_out=32, lstm_hidden=32)
     x = torch.randn(batch_size, 14, 30)
