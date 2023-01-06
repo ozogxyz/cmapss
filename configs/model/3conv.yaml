@@ -1,4 +1,4 @@
-_target_: src.models.cmapss_module.CMAPSSModule
+_target_: src.models.cmapss_module.Paper
 
 optimizer:
   _target_: torch.optim.Adam
