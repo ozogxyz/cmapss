@@ -6,14 +6,13 @@ class CNNLSTMNet(nn.Module):
     def __init__(self, conv_out: int, lstm_hidden: int):
         super(CNNLSTMNet, self).__init__()
 
-        self.conv1 = nn.Conv1d(14, conv_out,
-        kernel_size=3, stride=1, padding=1)
-        self.conv2 = nn.Conv1d(conv_out, 64, kernel_size=5, stride=2, padding=1)
-        self.conv3 = nn.Conv1d(64, 128, kernel_size=7, stride=3, padding=2)
+        self.conv1 = nn.Conv1d(14, conv_out, kernel_size=5, stride=1, padding=1)
+        self.conv2 = nn.Conv1d(conv_out, 64, kernel_size=3, stride=2, padding=1)
+        # self.conv3 = nn.Conv1d(64, 128, kernel_size=7, stride=3, padding=2)
 
         self.maxpool = nn.MaxPool1d(kernel_size=2, stride=2)
 
-        self.lstm1 = nn.LSTM(256, 64, batch_first=True)
+        self.lstm1 = nn.LSTM(448, 64, 2, batch_first=True, dropout=0.2)
 
         self.fc1 = nn.Linear(64, 32)
         self.fc2 = nn.Linear(32, 16)
@@ -30,17 +29,17 @@ class CNNLSTMNet(nn.Module):
         x = self.conv1(x)
         x = self.bn1(x)
         x = self.relu(x)
-        x = self.dropout(x)
+        # x = self.dropout(x)
 
         x = self.conv2(x)
         x = self.bn2(x)
         x = self.relu(x)
-        x = self.dropout(x)
+        # x = self.dropout(x)
 
-        x = self.conv3(x)
-        x = self.bn3(x)
-        x = self.relu(x)
-        x = self.dropout(x)
+        # x = self.conv3(x)
+        # x = self.bn3(x)
+        # x = self.relu(x)
+        # x = self.dropout(x)
 
         x = self.maxpool(x)
         x = x.view(x.size(0), -1)
