@@ -65,8 +65,6 @@ class CMAPSSModule(LightningModule):
         # reshape targets from [batch_size] to [batch_size, pred.size(1)] for correct loss
         # y = y.view(y.size(0), preds.size(1))
         # print(y.shape, preds.shape)
-        print(preds[:10])
-        print(y[:10])
         loss = self.criterion(preds, y)
         self.train_loss(loss.item())
         return loss, preds, y

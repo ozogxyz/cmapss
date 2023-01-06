@@ -11,9 +11,9 @@ class CNNLSTMNet(nn.Module):
         self.conv2 = nn.Conv1d(conv_out, 64, kernel_size=5, stride=2, padding=1)
         self.conv3 = nn.Conv1d(64, 128, kernel_size=7, stride=3, padding=2)
 
-        self.lstm1 = nn.LSTM(128, 64, batch_first=True)
+        self.lstm1 = nn.LSTM(512, 64, batch_first=True)
 
-        self.fc1 = nn.Linear(512, 32)
+        self.fc1 = nn.Linear(64, 32)
         self.fc2 = nn.Linear(32, 16)
         self.fc3 = nn.Linear(16, 1)
 
@@ -35,15 +35,9 @@ class CNNLSTMNet(nn.Module):
         x = self.relu(x)
         x = self.dropout(x)
 
-        print(x.shape)
-        # x = torch.mean(x, dim=1)
-        # x = x.permute(0, 2, 1)
-        # x = torch.flatten(x, start_dim=1)
-        x = x.flatten(start_dim=1)
-        # print(x.shape)
-        # x, _ = self.lstm1(x)
-        # x = self.dropout(x)
-        print(x.shape)
+        x = x.permute(0, 2, 1)
+        x = torch.flatten(x, start_dim=1)
+        x, _ = self.lstm1(x)
 
         x = self.fc1(x)
         x = self.relu(x)
@@ -52,4 +46,4 @@ class CNNLSTMNet(nn.Module):
         x = self.relu(x)
 
         x = self.fc3(x)
-        return x.squeeze()
+        return x.reshape(-1)
