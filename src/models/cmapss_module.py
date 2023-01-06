@@ -70,7 +70,6 @@ class CMAPSSModule(LightningModule):
         return loss, preds, y
 
     def training_step(self, batch: Any, batch_idx: int) -> Any:
-        print("training step")
         loss, preds, targets = self._step(batch)
 
         # update and log metrics
@@ -102,7 +101,6 @@ class CMAPSSModule(LightningModule):
         pass
 
     def validation_step(self, batch: Any, batch_idx: int) -> Any:
-        print("val step")
         loss, preds, targets = self._step(batch)
 
         # update and log metrics
@@ -116,7 +114,6 @@ class CMAPSSModule(LightningModule):
         return {"loss": loss, "preds": preds, "targets": targets}
 
     def validation_epoch_end(self, outputs: List[Any]):
-        print("val epoch end")
         # get current val rmse
         rmse = self.val_rmse.compute()
         # update the best val rmse so far
@@ -126,7 +123,6 @@ class CMAPSSModule(LightningModule):
         self.log("val/rmse_best", self.val_rmse_best.compute(), prog_bar=True)
 
     def test_step(self, batch: Any, batch_idx: int) -> Any:
-        print("test step")
         loss, preds, targets = self._step(batch)
 
         # update and log metrics

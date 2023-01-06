@@ -8,7 +8,7 @@ defaults:
   - model: cmapss.yaml
   - callbacks: default.yaml
   - logger: null # set logger here or use command line (e.g. `python train.py logger=tensorboard`)
-  - trainer: mps.yaml
+  - trainer: default.yaml
   - paths: default.yaml
   - extras: default.yaml
   - hydra: default.yaml
