@@ -5,7 +5,7 @@ import pytest
 from src.datamodules.cmapss_datamodule import CMAPSSDataModule
 
 
-@pytest.mark.parametrize("batch_size", [32, 128])
+@pytest.mark.parametrize("batch_size", [32])
 def test_cmapss_datamodule(batch_size: int):
     data_dir = "/Users/oozoglu/.rul-datasets"
     print(data_dir)
@@ -15,8 +15,9 @@ def test_cmapss_datamodule(batch_size: int):
 
     assert Path(data_dir, "CMAPSS").exists()
     assert Path(data_dir, "CMAPSS", "train_FD001.txt").exists()
-    assert Path(data_dir, "CMAPSS", "train_FD001.txt").exists()
-    assert Path(data_dir, "CMAPSS", "train_FD001.txt").exists()
+    assert Path(data_dir, "CMAPSS", "train_FD002.txt").exists()
+    assert Path(data_dir, "CMAPSS", "train_FD003.txt").exists()
+    assert Path(data_dir, "CMAPSS", "train_FD004.txt").exists()
 
     dm.setup()
     assert dm.data

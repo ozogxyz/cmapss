@@ -9,10 +9,10 @@ defaults:
   - override /callbacks: default.yaml
   - override /trainer: default.yaml
 
-# all parameters below will be merged with parameters from default configurations set above
-# this allows you to overwrite only specified parameters
+# all parameters below will be merged with parameters from default
+# configurations set above this allows you to overwrite only specified parameters
 
-tags: ["cmapss", "only-cnn"]
+tags: ["cmapss", "cnn-lastm-[-1]"]
 
 seed: 12345
 
@@ -25,12 +25,9 @@ model:
   optimizer:
     lr: 0.002
   net:
-    conv1_size: 14
-    conv2_size: 14
-    conv1_kernel: 5
-    conv1_stride: 2
-    conv2_kernel: 3
-    conv2_stride: 1
+    _target_: src.models.components.cnn_lstm_net.CNNLSTMNet
+    conv_out: 32
+    lstm_hidden: 32
 
 datamodule:
   batch_size: 64

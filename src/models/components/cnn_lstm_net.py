@@ -1,70 +1,55 @@
 import torch
 import torch.nn as nn
-from torch.nn import Module, Sequential
 
 
-class CNNLSTMNet(Module):
-    def __init__(
-        self,
-        conv1_size: int = 14,
-        conv2_size: int = 32,
-        conv1_kernel: int = 5,
-        conv1_stride: int = 2,
-        conv1_padding: int = 2,
-        conv2_kernel: int = 3,
-        conv2_stride: int = 1,
-        conv2_padding: int = 2,
-    ):
-        super().__init__()
-        self.feature_extractor = Sequential(
-            nn.Conv1d(
-                in_channels=conv1_size,
-                out_channels=conv2_size,
-                kernel_size=conv1_kernel,
-                stride=conv1_stride,
-                padding=conv1_padding,
-            ),
-            nn.BatchNorm1d(conv2_size),
-            nn.ReLU(),
-            nn.Conv1d(
-                in_channels=conv2_size,
-                out_channels=conv2_size,
-                kernel_size=conv2_kernel,
-                stride=conv2_stride,
-                padding=conv2_padding,
-            ),
-            nn.BatchNorm1d(conv2_size),
-            nn.ReLU(),
-            nn.MaxPool1d(kernel_size=2, stride=1),
-            nn.Dropout(p=0.2),
-            nn.Conv1d(
-                in_channels=conv2_size,
-                out_channels=conv2_size,
-                kernel_size=conv2_kernel,
-                stride=conv2_stride,
-                padding=conv2_padding,
-            ),
-            nn.BatchNorm1d(conv2_size),
-            nn.ReLU(),
-            nn.MaxPool1d(kernel_size=2, stride=1),
-            
-        )
+class CNNLSTMNet(nn.Module):
+    def __init__(self, conv_out: int, lstm_hidden: int):
+        super(CNNLSTMNet, self).__init__()
 
-        # self.lstm = nn.LSTM(
-        #     input_size=16, hidden_size=128, num_layers=1, batch_first=True
-        # )
+        self.conv1 = nn.Conv1d(14, conv_out,
+        kernel_size=3, stride=1, padding=1)
+        self.conv2 = nn.Conv1d(conv_out, 64, kernel_size=5, stride=2, padding=1)
+        self.conv3 = nn.Conv1d(64, 128, kernel_size=7, stride=3, padding=2)
 
-        self.fc = nn.Linear(238, 1)
+        self.lstm1 = nn.LSTM(128, 64, batch_first=True)
 
-    # def forward(self, x: torch.Tensor) -> torch.Tensor:
-    #     x = self.feature_extractor(x)
-    #     x, _ = self.lstm(x)
-    #     x = x.reshape(x.size(0), -1)
-    #     x = self.fc(x)
-    #     return x
+        self.fc1 = nn.Linear(512, 32)
+        self.fc2 = nn.Linear(32, 16)
+        self.fc3 = nn.Linear(16, 1)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.feature_extractor(x)
-        x = x.reshape(x.size(0), -1)
-        x = self.fc(x)
-        return x
+        self.relu = nn.ReLU()
+        self.tanh = nn.Tanh()
+        self.dropout = nn.Dropout(p=0.5)
+
+    def forward(self, x: torch.Tensor):
+        x = self.conv1(x)
+        x = self.relu(x)
+        x = self.dropout(x)
+
+        x = self.conv2(x)
+        x = self.relu(x)
+
+        x = self.dropout(x)
+
+        x = self.conv3(x)
+        x = self.relu(x)
+        x = self.dropout(x)
+
+        print(x.shape)
+        # x = torch.mean(x, dim=1)
+        # x = x.permute(0, 2, 1)
+        # x = torch.flatten(x, start_dim=1)
+        x = x.flatten(start_dim=1)
+        # print(x.shape)
+        # x, _ = self.lstm1(x)
+        # x = self.dropout(x)
+        print(x.shape)
+
+        x = self.fc1(x)
+        x = self.relu(x)
+
+        x = self.fc2(x)
+        x = self.relu(x)
+
+        x = self.fc3(x)
+        return x.squeeze()
