@@ -11,10 +11,10 @@ model_checkpoint:
   monitor: "val/rmse"
   mode: "min"
   save_last: True
-  auto_insert_metric_name: False
+  auto_insert_metric_name: True
 
 early_stopping:
-  monitor: "val/rmse"
+  monitor: "val/rmse_best"
   patience: 100
   mode: "min"
 

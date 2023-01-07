@@ -17,5 +17,3 @@ net:
   _target_: src.models.components.experiment.Experiment
   conv_out: 32
   lstm_hidden: 64
-
-

@@ -12,26 +12,23 @@ defaults:
 # all parameters below will be merged with parameters from default
 # configurations set above this allows you to overwrite only specified parameters
 
-tags: ["cmapss", "conv"]
+tags: ["train", "exp"]
 
 seed: 12345
 
 trainer:
-  min_epochs: 5
-  max_epochs: 30
-  gradient_clip_val: 1
+  min_epochs: 3
+  max_epochs: 100
+  gradient_clip_val: 0.5
 
 model:
-  optimizer:
-    lr: 0.01
-    weight_decay: 0.001
   net:
     _target_: src.models.components.experiment.Experiment
     conv_out: 32
     lstm_hidden: 50
 
 datamodule:
-  batch_size: 16
+  batch_size: 32
 
 logger:
   wandb:
@@ -41,9 +38,9 @@ logger:
 callbacks:
   early_stopping:
     patience: 3
-    monitor: "val/rmse_best"
-    verbose: False
-    min_delta: 0.2
+    monitor: "val/loss"
+    verbose: True
+    min_delta: 10
 
   model_summary:
-    max_depth: 3
+    max_depth: 0
