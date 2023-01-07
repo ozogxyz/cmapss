@@ -45,14 +45,8 @@ class Experiment(nn.Module):
         x = self.conv2(x)
         x = self.pool(x)
 
-        # print(x.shape)
         x = x.view(x.size(0), -1)
-        # x = x.permute(0, 2, 1)
-        # print(x.shape)
-        # x = x[:, -1, :]
-        # print(x.shape)
         x, _ = self.lstm1(x)
-        # print(x.shape)
         x = self.tanh(x)
 
         x = self.fc1(x)
