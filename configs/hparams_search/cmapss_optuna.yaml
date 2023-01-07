@@ -1,10 +1,10 @@
 # @package _global_
 
 # example hyperparameter optimization of some experiment with Optuna:
-# python train.py -m hparams_search=mnist_optuna experiment=example
+# python train.py -m hparams_search=cmapss_optuna experiment=example
 
 defaults:
-  - override /hydra/sweeper: basic
+  - override /hydra/sweeper: optuna
 
 # choose metric which will be optimized by Optuna
 # make sure this is the correct name of some metric logged in lightning module!
@@ -21,13 +21,13 @@ hydra:
 
     # storage URL to persist optimization results
     # for example, you can use SQLite if you set 'sqlite:///example.db'
-    storage: null
+    # storage: null
 
     # name of the study to persist optimization results
-    study_name: null
+    study_name: paper
 
     # number of parallel workers
-    n_jobs: 1
+    n_jobs: 10
 
     # 'minimize' or 'maximize' the objective
     direction: 'minimize'
@@ -46,7 +46,6 @@ hydra:
     # define hyperparameter search space
     params:
       model.optimizer.lr: interval(0.0001, 0.1)
+      model.optimizer.weight_decay: interval(0.01, 0.05)
       datamodule.batch_size: choice(32, 64, 128, 256)
-      model.net.lin1_size: choice(64, 128, 256)
-      model.net.lin2_size: choice(64, 128, 256)
-      model.net.lin3_size: choice(32, 64, 128, 256)
+      model.net.conv_out: choice(32, 64, 128)

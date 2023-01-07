@@ -6,7 +6,7 @@ from torchmetrics import MinMetric, MeanMetric
 from torchmetrics.regression.mse import MeanSquaredError
 
 
-class CMAPSSModule(LightningModule):
+class Experiment(LightningModule):
     """Example of LightningModule for CMAPSS-RUL estimation.
 
         A LightningModule organizes your PyTorch code into 6 sections:
@@ -70,7 +70,6 @@ class CMAPSSModule(LightningModule):
         return loss, preds, y
 
     def training_step(self, batch: Any, batch_idx: int) -> Any:
-        print("training step")
         loss, preds, targets = self._step(batch)
 
         # update and log metrics
@@ -80,7 +79,7 @@ class CMAPSSModule(LightningModule):
             "train/loss", self.train_loss, on_step=False, on_epoch=True, prog_bar=False
         )
         self.log(
-            "train/rmse", self.train_rmse, on_step=False, on_epoch=True, prog_bar=True
+            "train/rmse", self.train_rmse, on_step=False, on_epoch=True, prog_bar=False
         )
 
         # we can return here dict with any tensors
@@ -102,13 +101,12 @@ class CMAPSSModule(LightningModule):
         pass
 
     def validation_step(self, batch: Any, batch_idx: int) -> Any:
-        print("val step")
         loss, preds, targets = self._step(batch)
 
         # update and log metrics
         self.val_loss(loss)
         self.val_rmse(preds, targets)
-        self.log("val/loss", self.val_loss, on_step=False, on_epoch=True, prog_bar=True)
+        self.log("val/loss", self.val_loss, on_step=False, on_epoch=True, prog_bar=False)
         self.log(
             "val/rmse", self.val_rmse, on_step=False, on_epoch=True, prog_bar=False
         )
@@ -116,7 +114,6 @@ class CMAPSSModule(LightningModule):
         return {"loss": loss, "preds": preds, "targets": targets}
 
     def validation_epoch_end(self, outputs: List[Any]):
-        print("val epoch end")
         # get current val rmse
         rmse = self.val_rmse.compute()
         # update the best val rmse so far
@@ -126,7 +123,6 @@ class CMAPSSModule(LightningModule):
         self.log("val/rmse_best", self.val_rmse_best.compute(), prog_bar=True)
 
     def test_step(self, batch: Any, batch_idx: int) -> Any:
-        print("test step")
         loss, preds, targets = self._step(batch)
 
         # update and log metrics

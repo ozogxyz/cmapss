@@ -5,10 +5,10 @@
 defaults:
   - _self_
   - datamodule: cmapss.yaml
-  - model: cmapss.yaml
+  - model: paper.yaml
   - callbacks: default.yaml
   - logger: null # set logger here or use command line (e.g. `python train.py logger=tensorboard`)
-  - trainer: mps.yaml
+  - trainer: default.yaml
   - paths: default.yaml
   - extras: default.yaml
   - hydra: default.yaml
@@ -49,3 +49,11 @@ ckpt_path: null
 
 # seed for random number generators in pytorch, numpy and python.random
 seed: 42
+
+
+# override the formatting.
+hydra:
+  job_logging:
+    formatters:
+      colorlog:
+        format: '[%(blue)s%(name)s%(reset)s][%(log_color)s%(levelname)s%(reset)s] - %(message)s'

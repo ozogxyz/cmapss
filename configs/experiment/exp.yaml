@@ -5,34 +5,44 @@
 
 defaults:
   - override /datamodule: cmapss.yaml
-  - override /model: cmapss.yaml
+  - override /model: experiment.yaml
   - override /callbacks: default.yaml
   - override /trainer: default.yaml
 
 # all parameters below will be merged with parameters from default
 # configurations set above this allows you to overwrite only specified parameters
 
-tags: ["cmapss", "cnn-lastm-[-1]"]
+tags: ["cmapss", "conv"]
 
 seed: 12345
 
 trainer:
-  min_epochs: 10
-  max_epochs: 10
-  gradient_clip_val: 0.5
+  min_epochs: 5
+  max_epochs: 30
+  gradient_clip_val: 1
 
 model:
   optimizer:
-    lr: 0.002
+    lr: 0.01
   net:
-    _target_: src.models.components.cnn_lstm_net.CNNLSTMNet
+    _target_: src.models.components.experiment.Experiment
     conv_out: 32
-    lstm_hidden: 32
+    lstm_hidden: 50
 
 datamodule:
-  batch_size: 64
+  batch_size: 16
 
 logger:
   wandb:
     tags: ${tags}
     group: "cmapss"
+
+callbacks:
+  early_stopping:
+    patience: 3
+    monitor: "val/rmse_best"
+    verbose: False
+    min_delta: 0.2
+
+  model_summary:
+    max_depth: 3
