@@ -1,10 +1,10 @@
-_target_: src.models.cmapss_module.Paper
+_target_: src.models.experiment.Experiment
 
 optimizer:
   _target_: torch.optim.Adam
   _partial_: true
   lr: 0.001
-  weight_decay: 0.0
+  weight_decay: 0.01
 
 scheduler:
   _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
@@ -14,7 +14,8 @@ scheduler:
   patience: 10
 
 net:
-  _target_: src.models.components.cnn_lstm_net.CNNLSTMNet
+  _target_: src.models.components.experiment.Experiment
   conv_out: 32
   lstm_hidden: 32
+
 

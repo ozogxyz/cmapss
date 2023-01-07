@@ -14,7 +14,7 @@ scheduler:
   patience: 10
 
 net:
-  _target_: src.models.components.cnn_lstm_net.CNNLSTMNet
+  _target_: src.models.components.paper.Paper
   conv_out: 32
   lstm_hidden: 32
 

@@ -72,12 +72,7 @@ def train(cfg: DictConfig) -> Tuple[dict, dict]:
     log.info(f"Instantiating model <{cfg.model._target_}>")
     model: LightningModule = hydra.utils.instantiate(cfg.model)
 
-    # summary(model, (14, 30), batch_size=10, device='cpu')
-
-
-
-
-
+    # summary(model, input_size=((14, 30)))
 
     log.info("Instantiating callbacks...")
     callbacks: List[Callback] = utils.instantiate_callbacks(cfg.get("callbacks"))
