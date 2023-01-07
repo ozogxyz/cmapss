@@ -25,19 +25,20 @@ class Experiment(nn.Module):
         super(Experiment, self).__init__()
 
         self.conv1 = ConvBlock(14, conv_out, kernel_size=5, stride=1, padding=1)
-        self.conv2 = ConvBlock(conv_out, conv_out * 2, kernel_size=3, stride=2, padding=1)
+        self.conv2 = ConvBlock(conv_out, conv_out*2, kernel_size=3, stride=2, padding=1)
 
         self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
         self.lstm1 = nn.LSTM(
             384, lstm_hidden, 2, batch_first=True, dropout=0.2
         )
 
-        self.fc1 = nn.Linear(lstm_hidden, 25)
-        self.fc2 = nn.Linear(25, 12)
-        self.fc3 = nn.Linear(12, 6)
-        self.fc4 = nn.Linear(6, 1)
+        self.fc1 = nn.Linear(lstm_hidden, 16)
+        self.fc2 = nn.Linear(16, 8)
+        self.fc3 = nn.Linear(8, 1)
 
         self.tanh = nn.Tanh()
+        self.relu = nn.ReLU()
+
 
     def forward(self, x: torch.Tensor):
         x = self.conv1(x)
@@ -49,8 +50,9 @@ class Experiment(nn.Module):
         x = self.tanh(x)
 
         x = self.fc1(x)
+        x = self.relu(x)
         x = self.fc2(x)
+        x = self.relu(x)
         x = self.fc3(x)
-        x = self.fc4(x)
 
         return x.reshape(-1)
