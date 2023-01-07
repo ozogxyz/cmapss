@@ -4,7 +4,7 @@ import torch.nn as nn
 
 class Paper(nn.Module):
     def __init__(self, conv_out: int, lstm_hidden: int):
-        super(CNNLSTMNet, self).__init__()
+        super(Paper, self).__init__()
 
         self.conv1 = nn.Conv1d(14, conv_out, kernel_size=5, stride=1, padding=1)
         self.conv2 = nn.Conv1d(conv_out, 64, kernel_size=3, stride=2, padding=1)

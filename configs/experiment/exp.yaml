@@ -24,6 +24,7 @@ trainer:
 model:
   optimizer:
     lr: 0.01
+    weight_decay: 0.001
   net:
     _target_: src.models.components.experiment.Experiment
     conv_out: 32
