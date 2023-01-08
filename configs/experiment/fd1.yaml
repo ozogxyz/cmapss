@@ -43,4 +43,4 @@ callbacks:
     min_delta: 10
 
   model_summary:
-    max_depth: 0
+    max_depth: 3

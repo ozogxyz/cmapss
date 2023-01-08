@@ -5,4 +5,4 @@ ignore_warnings: True
 enforce_tags: True
 
 # pretty print config tree at the start of the run using Rich library
-print_config: False
+print_config: True
