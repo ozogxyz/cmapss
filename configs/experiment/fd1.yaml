@@ -23,7 +23,7 @@ trainer:
 
 model:
   net:
-    _target_: src.models.components.cnnlstm_net.CNNLSTMNet
+    _target_: src.models.components.experiment.ExpNet
     conv_out: 32
     lstm_hidden: 50
 
