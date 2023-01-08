@@ -6,7 +6,7 @@ from torchmetrics import MinMetric, MeanMetric
 from torchmetrics.regression.mse import MeanSquaredError
 
 
-class Experiment(LightningModule):
+class CNNLSTMModule(LightningModule):
     """Example of LightningModule for CMAPSS-RUL estimation.
 
         A LightningModule organizes your PyTorch code into 6 sections:

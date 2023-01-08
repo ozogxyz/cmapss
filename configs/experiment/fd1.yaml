@@ -5,7 +5,7 @@
 
 defaults:
   - override /datamodule: cmapss.yaml
-  - override /model: experiment.yaml
+  - override /model: cnnlstm.yaml
   - override /callbacks: default.yaml
   - override /trainer: default.yaml
 
@@ -23,7 +23,7 @@ trainer:
 
 model:
   net:
-    _target_: src.models.components.experiment.Experiment
+    _target_: src.models.components.cnnlstm_net.CNNLSTMNet
     conv_out: 32
     lstm_hidden: 50
 

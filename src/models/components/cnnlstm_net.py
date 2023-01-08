@@ -20,9 +20,9 @@ class ConvBlock(nn.Module):
         return x
 
 
-class Experiment(nn.Module):
+class CNNLSTMNet(nn.Module):
     def __init__(self, conv_out: int, lstm_hidden: int):
-        super(Experiment, self).__init__()
+        super(CNNLSTMNet, self).__init__()
 
         self.conv1 = ConvBlock(14, conv_out, kernel_size=5, stride=1, padding=1)
         self.conv2 = ConvBlock(conv_out, conv_out*2, kernel_size=3, stride=2, padding=1)
