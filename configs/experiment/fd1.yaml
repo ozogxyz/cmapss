@@ -25,7 +25,7 @@ model:
   net:
     _target_: src.models.components.experiment.ExpNet
     conv_out: 32
-    lstm_hidden: 50
+    lstm_hidden: 32
 
 datamodule:
   batch_size: 32
@@ -37,10 +37,10 @@ logger:
 
 callbacks:
   early_stopping:
-    patience: 3
-    monitor: "val/loss"
-    verbose: True
-    min_delta: 10
+    patience: 5
+    monitor: "val/rmse_best"
+    verbose: False
+    min_delta: 0.1
 
   model_summary:
     max_depth: 3

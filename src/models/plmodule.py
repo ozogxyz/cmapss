@@ -79,7 +79,7 @@ class PLModule(LightningModule):
             "train/loss", self.train_loss, on_step=False, on_epoch=True, prog_bar=False
         )
         self.log(
-            "train/rmse", self.train_rmse, on_step=False, on_epoch=True, prog_bar=False
+            "train/rmse", self.train_rmse, on_step=False, on_epoch=True, prog_bar=True
         )
 
         # we can return here dict with any tensors
