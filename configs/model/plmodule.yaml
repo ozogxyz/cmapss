@@ -1,4 +1,4 @@
-_target_: src.models.cnnlstm_module.CNNLSTMModule
+_target_: src.models.plmodule.PLModule
 
 optimizer:
   _target_: torch.optim.Adam
@@ -16,5 +16,5 @@ scheduler:
 net:
   _target_: src.models.components.cnnlstm_net.CNNLSTMNet
   conv_out: 32
-  lstm_hidden: 32
+  lstm_hidden: 50
 

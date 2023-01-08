@@ -42,8 +42,6 @@ from pytorch_lightning.loggers import LightningLoggerBase
 
 from src import utils
 
-from torchsummary import summary
-
 log = utils.get_pylogger(__name__)
 
 
@@ -71,8 +69,6 @@ def train(cfg: DictConfig) -> Tuple[dict, dict]:
 
     log.info(f"Instantiating model <{cfg.model._target_}>")
     model: LightningModule = hydra.utils.instantiate(cfg.model)
-
-    # summary(model, input_size=((14, 30)))
 
     log.info("Instantiating callbacks...")
     callbacks: List[Callback] = utils.instantiate_callbacks(cfg.get("callbacks"))

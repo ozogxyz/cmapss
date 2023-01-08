@@ -1,12 +1,6 @@
-from src.models.components.experiment import Experiment
+from src.models.components.experiment import ExpNet
 import torch
 import pytest
-
-
-def test_conv_init():
-    experiment_net = Experiment(conv_out=32, lstm_hidden=32)
-    assert experiment_net is not None
-    assert isinstance(experiment_net, Experiment)
 
 
 @pytest.mark.parametrize("batch_size", [32])

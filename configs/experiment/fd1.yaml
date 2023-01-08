@@ -5,7 +5,7 @@
 
 defaults:
   - override /datamodule: cmapss.yaml
-  - override /model: cnnlstm.yaml
+  - override /model: plmodule.yaml
   - override /callbacks: default.yaml
   - override /trainer: default.yaml
 
