@@ -29,4 +29,9 @@ def test_train_eval(tmp_path, cfg_train, cfg_eval):
     test_metric_dict, _ = evaluate(cfg_eval)
 
     assert test_metric_dict["test/rmse"] > 0.0
-    assert abs(train_metric_dict["test/rmse"].item() - test_metric_dict["test/rmse"].item()) < 0.001
+    assert (
+        abs(
+            train_metric_dict["test/rmse"].item() - test_metric_dict["test/rmse"].item()
+        )
+        < 0.001
+    )

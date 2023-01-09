@@ -38,7 +38,7 @@ logger:
 callbacks:
   early_stopping:
     min_delta: 0.1
-    patience: 100
+    patience: 3
     verbose: False
     monitor: "val/rmse_best"
 

@@ -106,7 +106,9 @@ class PLModule(LightningModule):
         # update and log metrics
         self.val_loss(loss)
         self.val_rmse(preds, targets)
-        self.log("val/loss", self.val_loss, on_step=False, on_epoch=True, prog_bar=False)
+        self.log(
+            "val/loss", self.val_loss, on_step=False, on_epoch=True, prog_bar=False
+        )
         self.log(
             "val/rmse", self.val_rmse, on_step=False, on_epoch=True, prog_bar=False
         )
