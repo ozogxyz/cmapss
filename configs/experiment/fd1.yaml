@@ -14,11 +14,11 @@ defaults:
 
 tags: ["train", "fd1"]
 
-seed: 12345
+seed: 42
 
 trainer:
-  min_epochs: 3
-  max_epochs: 100
+  min_epochs: 1
+  max_epochs: 30
   gradient_clip_val: 0.5
 
 model:
@@ -37,10 +37,10 @@ logger:
 
 callbacks:
   early_stopping:
-    patience: 5
-    monitor: "val/rmse_best"
-    verbose: False
     min_delta: 0.1
+    patience: 100
+    verbose: False
+    monitor: "val/rmse_best"
 
   model_summary:
-    max_depth: 3
+    max_depth: -1

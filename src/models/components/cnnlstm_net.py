@@ -10,7 +10,7 @@ class ConvBlock(nn.Module):
         self.conv = nn.Conv1d(in_channels, out_channels, kernel_size, stride)
         self.bn = nn.BatchNorm1d(out_channels)
         self.relu = nn.ReLU(inplace=True)
-        self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
+        self.pool = nn.MaxPool1d(kernel_size=2, stride=1)
         self.dropout = nn.Dropout(p=0.5)
 
     def forward(self, x: torch.Tensor):
@@ -28,7 +28,7 @@ class CNNLSTMNet(nn.Module):
         self.conv2 = ConvBlock(conv_out, conv_out*2, kernel_size=3, stride=2, padding=1)
 
         self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
-        self.lstm1 = nn.LSTM(
+        self.lstm = nn.LSTM(
             384, lstm_hidden, 2, batch_first=True, dropout=0.2
         )
 
@@ -46,7 +46,7 @@ class CNNLSTMNet(nn.Module):
         x = self.pool(x)
 
         x = x.view(x.size(0), -1)
-        x, _ = self.lstm1(x)
+        x, _ = self.lstm(x)
         x = self.tanh(x)
 
         x = self.fc1(x)
