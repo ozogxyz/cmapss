@@ -1,0 +1,49 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - override /datamodule: cmapss.yaml
+  - override /model: plmodule.yaml
+  - override /callbacks: default.yaml
+  - override /trainer: default.yaml
+
+# all parameters below will be merged with parameters from default
+# configurations set above this allows you to overwrite only specified parameters
+
+tags: ["train", "net"]
+
+seed: 42
+
+trainer:
+  accelerator: gpu
+  devices: 1
+  min_epochs: 1
+  max_epochs: 30
+  gradient_clip_val: 0.5
+
+model:
+  net:
+    _target_: src.models.components.experiment.Net
+    in_channels: 14
+    out_channels: 32
+    kernel_size: 5
+
+datamodule:
+  batch_size: 32
+
+logger:
+  wandb:
+    tags: ${tags}
+    group: "cmapss-fd1"
+
+callbacks:
+  early_stopping:
+    min_delta: 0.1
+    patience: 3
+    verbose: False
+    monitor: "val/rmse_best"
+
+  model_summary:
+    max_depth: -1

@@ -1,58 +1,56 @@
-from typing import Callable, Dict, Iterable
 import torch
 import torch.nn as nn
 
 
-class ConvBlock(nn.Module):
+class Net(nn.Module):
     def __init__(
         self,
-        input: torch.Tensor,
+        in_channels: int,
         out_channels: int,
         kernel_size: int,
-        stride: int = 1,
-        dilation: int = 1,
     ):
         super().__init__()
-        self.in_channels = input.size(1)
-        self.out_channels = out_channels
-        self.window_size = input.size(2)
-        self.kernel_size = kernel_size
-        self.stride = stride
-        self.padding = kernel_size // 2
-        self.dilation = dilation
+        self.conv1 = nn.Conv1d(in_channels, out_channels, kernel_size, stride=1, padding=1)
+        self.conv1_bn = nn.BatchNorm1d(32)
+        self.conv2 = nn.Conv1d(32, out_channels*2, kernel_size=3, stride=2, padding=1)
+        self.conv2_bn = nn.BatchNorm1d(out_channels*2)
+        self.pooling = nn.MaxPool1d(2, 2)
 
-        self.conv = nn.Conv1d(
-            in_channels=self.in_channels,
-            out_channels=self.out_channels,
-            kernel_size=self.kernel_size,
-            stride=self.stride,
-            padding=self.padding,
-            dilation=self.dilation,
+        self.rnn = nn.GRU(
+            448,
+            out_channels,
+            batch_first=True,
+            bidirectional=False,
+            dropout=0.2,
         )
+        self.rnn_bn = nn.BatchNorm1d(out_channels * 2)
+        self.tanh = nn.Tanh()
 
-        self.bn = nn.BatchNorm1d(out_channels)
+        self.fc1 = nn.Linear(out_channels, 16)
+        self.fc2 = nn.Linear(16, 8)
+        self.fc3 = nn.Linear(8, 1)
+
         self.relu = nn.ReLU()
-        self.dropout = nn.Dropout(p=0.5)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.conv(x)
-        x = self.bn(x)
+        x = self.conv1(x)
+        x = self.conv1_bn(x)
         x = self.relu(x)
-        x = self.dropout(x)
-        return x
 
+        x = self.conv2(x)
+        x = self.conv2_bn(x)
+        x = self.relu(x)
 
-class FeatureExtractor(nn.Module):
-    def __init__(self, model: nn.Module):
-        super().__init__()
-        self.model = model
+        x = self.pooling(x)
+        x = torch.flatten(x, 1)
 
-         # Register a hook for each layer
-        for name, layer in self.model.named_children():
-            layer.__name__ = name
-            layer.register_forward_hook(
-                lambda layer, _, output: print(f"{layer.__name__}: {output.shape}")
-            )
+        x, _ = self.rnn(x)
+        x = self.tanh(x)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.model(x)
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.fc2(x)
+        x = self.relu(x)
+        x = self.fc3(x)
+
+        return x.reshape(-1)
