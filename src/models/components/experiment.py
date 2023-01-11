@@ -15,7 +15,7 @@ class ConvBlock(nn.Module):
         self.conv = nn.Conv1d(in_channels, out_channels, kernel_size, stride)
         self.bn = nn.BatchNorm1d(out_channels)
         self.relu = nn.ReLU(inplace=True)
-        self.pool = nn.MaxPool1d(kernel_size=2, stride=1)
+        self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
         self.dropout = nn.Dropout(p=0.5)
 
     def forward(self, x: torch.Tensor):

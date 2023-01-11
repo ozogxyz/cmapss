@@ -94,7 +94,7 @@ class PLModule(LightningModule):
         self.val_rmse_best(rmse)
 
         # use `.compute()` otherwise it would be reset by lightning after each epoch
-        self.log("val/rmse_best", self.val_rmse_best.compute(), prog_bar=True)
+        self.log("val/rmse_best", self.val_rmse_best.compute(), prog_bar=False)
 
     def test_step(self, batch: Any, batch_idx: int) -> Any:
         loss, preds, targets = self._step(batch)

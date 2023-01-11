@@ -21,7 +21,7 @@ hydra:
 
     # storage URL to persist optimization results
     # for example, you can use SQLite if you set 'sqlite:///example.db'
-    # storage: null
+    storage: sqlite:///hparams.db
 
     # name of the study to persist optimization results
     study_name: paper
@@ -46,6 +46,6 @@ hydra:
     # define hyperparameter search space
     params:
       model.optimizer.lr: interval(0.0001, 0.1)
-      model.optimizer.weight_decay: interval(0.01, 0.05)
-      datamodule.batch_size: choice(32, 64, 128, 256)
-      model.net.conv_out: choice(32, 64, 128)
+      model.optimizer.weight_decay: interval(0.0, 0.05)
+      datamodule.batch_size: choice(16, 32, 64)
+      model.net.lstm_hidden: choice(32, 50)

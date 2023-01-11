@@ -25,5 +25,9 @@ early_stopping:
   verbose: False
   monitor: "val/rmse_best"
 
+callbacks:
+  model_summary:
+    max_depth: 0
+
 extras:
-  print_config: true
+  print_config: False
