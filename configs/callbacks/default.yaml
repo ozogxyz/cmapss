@@ -7,15 +7,15 @@ defaults:
 
 model_checkpoint:
   dirpath: ${paths.output_dir}/checkpoints
-  filename: "epoch_{epoch:03d}"
+  filename: "model"
   monitor: "val/rmse"
   mode: "min"
-  save_last: True
+  save_last: False
   auto_insert_metric_name: True
 
 early_stopping:
   monitor: "val/rmse_best"
-  patience: 100
+  patience: 13
   mode: "min"
 
 model_summary:

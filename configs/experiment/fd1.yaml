@@ -4,22 +4,14 @@
 # python train.py experiment=example
 
 defaults:
-  - override /datamodule: cmapss.yaml
-  - override /model: plmodule.yaml
+  - override /model: default.yaml
   - override /callbacks: default.yaml
-  - override /trainer: default.yaml
 
 # all parameters below will be merged with parameters from default
 # configurations set above this allows you to overwrite only specified parameters
-
 tags: ["train", "fd1"]
 
 seed: 42
-
-trainer:
-  min_epochs: 1
-  max_epochs: 30
-  gradient_clip_val: 0.5
 
 model:
   net:
@@ -27,20 +19,11 @@ model:
     conv_out: 32
     lstm_hidden: 32
 
-datamodule:
-  batch_size: 32
+early_stopping:
+  min_delta: 0.1
+  patience: 3
+  verbose: False
+  monitor: "val/rmse_best"
 
-logger:
-  wandb:
-    tags: ${tags}
-    group: "cmapss-fd1"
-
-callbacks:
-  early_stopping:
-    min_delta: 0.1
-    patience: 3
-    verbose: False
-    monitor: "val/rmse_best"
-
-  model_summary:
-    max_depth: -1
+extras:
+  print_config: true

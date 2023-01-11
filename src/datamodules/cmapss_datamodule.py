@@ -11,7 +11,7 @@ class CMAPSSDataModule(RulDataModule):
         # change data download destionation from ~/.rul_datasets to project
         # print(rul_datasets.reader.data_root._DATA_ROOT)
 
-        super().__init__(reader=CmapssReader(fd=fd), batch_size=batch_size)
+        super().__init__(reader=CmapssReader(fd=fd), batch_size=batch_size) # type: ignore
 
         # this line allows to access init params with 'self.hparams' attribute
         # also ensures init params will be stored in ckpt
