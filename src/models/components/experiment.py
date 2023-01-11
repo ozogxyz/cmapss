@@ -2,37 +2,12 @@ import torch
 import torch.nn as nn
 
 
-class ConvBlock(nn.Module):
-    def __init__(
-        self,
-        in_channels: int,
-        out_channels: int,
-        kernel_size: int,
-        stride: int,
-        padding: int,
-    ):
-        super(ConvBlock, self).__init__()
-        self.conv = nn.Conv1d(in_channels, out_channels, kernel_size, stride)
-        self.bn = nn.BatchNorm1d(out_channels)
-        self.relu = nn.ReLU(inplace=True)
-        self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
-        self.dropout = nn.Dropout(p=0.5)
-
-    def forward(self, x: torch.Tensor):
-        x = self.conv(x)
-        x = self.bn(x)
-        x = self.relu(x)
-        return x
-
-
 class ExpNet(nn.Module):
     def __init__(self, conv_out: int, lstm_hidden: int):
         super(ExpNet, self).__init__()
 
-        self.conv1 = ConvBlock(14, conv_out, kernel_size=5, stride=1, padding=1)
-        self.conv2 = ConvBlock(
-            conv_out, conv_out * 2, kernel_size=3, stride=2, padding=1
-        )
+        self.conv1 = nn.Conv1d(14, conv_out, kernel_size=5, stride=1, padding=1)
+        self.conv2 = nn.Conv1d(conv_out, conv_out*2, kernel_size=3, stride=2, padding=1)
 
         self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
         self.lstm = nn.LSTM(384, lstm_hidden, 2, batch_first=True, dropout=0.2)
