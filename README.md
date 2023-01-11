@@ -1,5 +1,3 @@
-**DELETE EVERYTHING ABOVE FOR YOUR PROJECT**
-
 ______________________________________________________________________
 
 <div align="center">
@@ -14,6 +12,8 @@ ______________________________________________________________________
 [![Conference](http://img.shields.io/badge/AnyConference-year-4b44ce.svg)](https://papers.nips.cc/paper/2020)
 
 </div>
+
+______________________________________________________________________
 
 ## Description
 
@@ -36,9 +36,13 @@ previous work. The data set was generated with the Commercial Modular Aero-Propu
 dynamical model. The data set has been provided by the NASA Prognostics Center of Excellence (PCoE) in collaboration
 with ETH Zurich and PARC.
 
+______________________________________________________________________
+
 Download Mirror: https://phm-datasets.s3.amazonaws.com/NASA/17.+Turbofan+Engine+Degradation+Simulation+Data+Set+2.zip
 Data Set Citation: M. Chao, C.Kulkarni, K. Goebel and O. Fink (2021). "Aircraft Engine Run-to-Failure Dataset under real
 flight conditions", NASA Prognostics Data Repository, NASA Ames Research Center, Moffett Field, CA
+
+______________________________________________________________________
 
 ## How to run
 
