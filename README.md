@@ -1232,7 +1232,7 @@ ______________________________________________________________________
 
 <div align="center">
 
-# Your Project Name
+# Hybrid Deep Learning Algorithms for Multivariate Time Series Forecasting (NASA C-MAPSS)
 
 <a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white"></a>
 <a href="https://pytorchlightning.ai/"><img alt="Lightning" src="https://img.shields.io/badge/-Lightning-792ee5?logo=pytorchlightning&logoColor=white"></a>
@@ -1245,7 +1245,28 @@ ______________________________________________________________________
 
 ## Description
 
-What it does
+Novel algorithms to predict Remaining Useful Life (RUL) on NASA’s turbofan engine degradation simulation dataset
+CMAPSS benchmark. 
+
+### NASA Intelligent Systems Division-Prognostics Center of Excellence
+
+Prognostic Health Management
+Predictive Maintenance of Turbofan Engines
+Novel algorithms to predict Remaining Useful Life (RUL) on NASA’s turbofan engine degradation simulation dataset
+CMAPSS benchmark. [Link to the dataset](https://www.nasa.gov/intelligent-systems-division/)
+
+Turbofan Engine Degradation Simulation-2
+The generation of data-driven prognostics models requires the availability of data sets with run-to-failure
+trajectories. To contribute to the development of these methods, the data set provides a new realistic data set of
+run-to-failure trajectories for a small fleet of aircraft engines under realistic flight conditions. The damage
+propagation modelling used for the generation of this synthetic data set builds on the modeling strategy from
+previous work. The data set was generated with the Commercial Modular Aero-Propulsion System Simulation (C-MAPSS)
+dynamical model. The data set has been provided by the NASA Prognostics Center of Excellence (PCoE) in collaboration
+with ETH Zurich and PARC.
+
+Download Mirror: https://phm-datasets.s3.amazonaws.com/NASA/17.+Turbofan+Engine+Degradation+Simulation+Data+Set+2.zip
+Data Set Citation: M. Chao, C.Kulkarni, K. Goebel and O. Fink (2021). "Aircraft Engine Run-to-Failure Dataset under real
+flight conditions", NASA Prognostics Data Repository, NASA Ames Research Center, Moffett Field, CA
 
 ## How to run
 
@@ -1253,8 +1274,8 @@ Install dependencies
 
 ```bash
 # clone project
-git clone https://github.com/YourGithubName/your-repo-name
-cd your-repo-name
+git clone https://github.com/ozogxyz/cmapss
+cd cmapss
 
 # [OPTIONAL] create conda environment
 conda create -n myenv python=3.9
@@ -1288,24 +1309,3 @@ You can override any parameter from command line like this
 ```bash
 python src/train.py trainer.max_epochs=20 datamodule.batch_size=64
 ```
-
-
-# NASA Intelligent Systems Division-Prognostics Center of Excellence
-
-Prognostic Health Management
-Predictive Maintenance of Turbofan Engines
-Novel algorithms to predict Remaining Useful Life (RUL) on NASA’s turbofan engine degradation simulation dataset
-CMAPSS benchmark. [Link to the dataset](https://www.nasa.gov/intelligent-systems-division/)
-
-Turbofan Engine Degradation Simulation-2
-The generation of data-driven prognostics models requires the availability of data sets with run-to-failure
-trajectories. To contribute to the development of these methods, the data set provides a new realistic data set of
-run-to-failure trajectories for a small fleet of aircraft engines under realistic flight conditions. The damage
-propagation modelling used for the generation of this synthetic data set builds on the modeling strategy from
-previous work. The data set was generated with the Commercial Modular Aero-Propulsion System Simulation (C-MAPSS)
-dynamical model. The data set has been provided by the NASA Prognostics Center of Excellence (PCoE) in collaboration
-with ETH Zurich and PARC.
-
-Download Mirror: https://phm-datasets.s3.amazonaws.com/NASA/17.+Turbofan+Engine+Degradation+Simulation+Data+Set+2.zip
-Data Set Citation: M. Chao, C.Kulkarni, K. Goebel and O. Fink (2021). "Aircraft Engine Run-to-Failure Dataset under real
-flight conditions", NASA Prognostics Data Repository, NASA Ames Research Center, Moffett Field, CA
