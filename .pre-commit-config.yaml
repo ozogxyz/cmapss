@@ -50,13 +50,7 @@ repos:
     rev: 4.0.1
     hooks:
       - id: flake8
-        args:
-          [
-            "--extend-ignore",
-            "E203,E402,E501,F401,F841",
-            "--exclude",
-            "logs/*,data/*",
-          ]
+        args: ["--extend-ignore", "E203,E402,E501,F401,F841", "--exclude", "logs/*,data/*"]
 
   # python security linter
   - repo: https://github.com/PyCQA/bandit
@@ -115,8 +109,4 @@ repos:
       - id: nbqa-isort
         args: ["--profile=black"]
       - id: nbqa-flake8
-        args:
-          [
-            "--extend-ignore=E203,E402,E501,F401,F841",
-            "--exclude=logs/*,data/*",
-          ]
+        args: ["--extend-ignore=E203,E402,E501,F401,F841", "--exclude=logs/*,data/*"]

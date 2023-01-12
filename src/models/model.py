@@ -6,12 +6,10 @@ class CNNLSTM(nn.Module):
     """Experimental network for time series foreacasting."""
 
     def __init__(self, conv_out: int, kernel_size: int, stride: int, lstm_hidden: int):
-        super(CNNLSTM, self).__init__()
+        super().__init__()
 
         self.conv1 = nn.Conv1d(14, conv_out, kernel_size, stride, padding=1)
-        self.conv2 = nn.Conv1d(
-            conv_out, conv_out * 2, kernel_size - 2, stride, padding=1
-        )
+        self.conv2 = nn.Conv1d(conv_out, conv_out * 2, kernel_size - 2, stride, padding=1)
 
         self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
 
