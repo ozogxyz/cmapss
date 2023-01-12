@@ -23,7 +23,6 @@ class CNNLSTM(nn.Module):
 
         self.relu = nn.ReLU(inplace=True)
 
-
     def forward(self, x: torch.Tensor):
         x = self.conv1(x)
         x = self.bn1(x)

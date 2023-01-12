@@ -17,4 +17,3 @@ net:
   _target_: src.models.model.CNNLSTM
   conv_out: 32
   lstm_hidden: 50
-

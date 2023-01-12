@@ -76,7 +76,7 @@ logger:
     prefix: rmse
     group: fd1
     tags:
-    - experiment
+      - experiment
     job_type: train
 trainer:
   _target_: pytorch_lightning.Trainer
