@@ -27,7 +27,7 @@ theme:
   palette:
     - scheme: default
       primary: light green
-      accent:  green
+      accent: green
       toggle:
         icon: material/weather-night
         name: Switch to dark mode

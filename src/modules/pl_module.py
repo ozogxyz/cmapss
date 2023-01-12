@@ -109,9 +109,7 @@ class PLModule(LightningModule):
         return {"loss": loss, "preds": preds, "targets": targets}
 
     def configure_optimizers(self) -> Dict[str, Any]:
-        optimizer: torch.optim.Optimizer = self.hparams.optimizer(
-            params=self.parameters()
-        )
+        optimizer: torch.optim.Optimizer = self.hparams.optimizer(params=self.parameters())
         if self.hparams.scheduler is not None:
             scheduler: Any = self.hparams.scheduler(optimizer)
             return {

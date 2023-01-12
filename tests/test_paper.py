@@ -1,6 +1,7 @@
-from src.models.model import CNNLSTM
-import torch
 import pytest
+import torch
+
+from src.models.model import CNNLSTM
 
 
 def test_cnn_lstm_net_init():

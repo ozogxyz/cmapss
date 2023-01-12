@@ -1,6 +1,7 @@
-from src.models.components.experiment import ExpNet
-import torch
 import pytest
+import torch
+
+from src.models.components.experiment import ExpNet
 
 
 @pytest.fixture

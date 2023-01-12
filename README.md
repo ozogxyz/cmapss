@@ -16,6 +16,7 @@ ______________________________________________________________________
 ______________________________________________________________________
 
 ## Description
+
 ## Dataset Description
 
 <div align="justify">
@@ -23,6 +24,7 @@ ______________________________________________________________________
 Benchmark source: NASA Intelligent Systems Division: Prognostics Center of Excellence - Prognostic Health Management, Predictive Maintenance of Turbofan Engines.
 
 The generation of data-driven prognostics models requires the availability of data sets with run-to-failure trajectories. To contribute to the development of these methods, the data set provides a new realistic data set of run-to-failure trajectories for a small fleet of aircraft engines under realistic flight conditions. The damage propagation modelling used for the generation of this synthetic data set builds on the modeling strategy from previous work. The data set was generated with the Commercial Modular Aero-Propulsion System Simulation (C-MAPSS) dynamical model. The data set has been provided by the NASA Prognostics Center of Excellence (PCoE) in collaboration with ETH Zurich and PARC.
+
 </div>
 
 [Link to the dataset](https://www.nasa.gov/intelligent-systems-division/)
@@ -38,6 +40,7 @@ ______________________________________________________________________
 ## Project Description
 
 Novel algorithms to predict Remaining Useful Life (RUL) on NASA’s benchmark dataset, CMAPSS turbofan engine degradation simulation.
+
 ______________________________________________________________________
 
 ## How to run

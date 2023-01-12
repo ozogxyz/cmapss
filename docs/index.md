@@ -10,18 +10,13 @@
 
 A new awesome project.
 
-
 ## Installation
 
 ```bash
 pip install git+ssh://git@github.com/ozogxyz/mvtsf.git
 ```
 
-
 ## Quickstart
-
-[comment]: <> (> Fill me!)
-
 
 ## Development installation
 
@@ -41,7 +36,6 @@ Run the tests:
 pre-commit run --all-files
 pytest -v
 ```
-
 
 ### Update the dependencies
 

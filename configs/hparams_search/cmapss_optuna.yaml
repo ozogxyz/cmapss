@@ -30,7 +30,7 @@ hydra:
     n_jobs: 10
 
     # 'minimize' or 'maximize' the objective
-    direction: 'minimize'
+    direction: "minimize"
 
     # total number of runs that will be executed
     n_trials: 20
