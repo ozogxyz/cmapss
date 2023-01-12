@@ -72,7 +72,7 @@ class PLModule(LightningModule):
         self.train_loss(loss)
         self.train_rmse(preds, targets)
         self.log_dict(
-            {"train/loss": loss, "train/rmse": self.train_rmse},
+            {"train/loss": self.train_loss, "train/rmse": self.train_rmse},
         )
 
         return {"loss": loss, "preds": preds, "targets": targets}
@@ -84,7 +84,7 @@ class PLModule(LightningModule):
         self.val_loss(loss)
         self.val_rmse(preds, targets)
         self.log_dict(
-            {"val/loss": loss, "val/rmse": self.val_rmse},
+            {"val/loss": self.val_loss, "val/rmse": self.val_rmse},
         )
 
         return {"loss": loss, "preds": preds, "targets": targets}
@@ -96,6 +96,7 @@ class PLModule(LightningModule):
         # use `.compute()` otherwise it would be reset by lightning after each epoch
         self.log("val/rmse_best", self.val_rmse_best.compute(), prog_bar=False)
 
+
     def test_step(self, batch: Any, batch_idx: int) -> Any:
         loss, preds, targets = self._step(batch)
 
@@ -103,7 +104,7 @@ class PLModule(LightningModule):
         self.test_loss(loss)
         self.test_rmse(preds, targets)
         self.log_dict(
-            {"test/loss": loss, "test/rmse": self.test_rmse},
+            {"test/loss": self.test_loss, "test/rmse": self.test_rmse},
         )
 
         return {"loss": loss, "preds": preds, "targets": targets}

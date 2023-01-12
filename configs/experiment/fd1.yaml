@@ -20,20 +20,17 @@ model:
     _target_: src.models.model.CNNLSTM
     conv_out: 32
     kernel_size: 5
-    stride: 2
+    stride: 1
     lstm_hidden: 32
 
-trainer:
-  gradient_clip_val: 0.5
-
-extras:
-  print_config: True
-
-early_stopping:
-  monitor: "val/rmse_best"
-  patience: 13
-  mode: "min"
+# trainer:
+  # gradient_clip_val: 0.5
 
 callbacks:
   model_summary:
     max_depth: 0
+
+  early_stopping:
+    monitor: "val/rmse_best"
+    patience: 1
+    mode: "min"
