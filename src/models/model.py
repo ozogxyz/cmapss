@@ -5,48 +5,43 @@ import torch.nn as nn
 class CNNLSTM(nn.Module):
     """Experimental network for multi variate time series foreacasting."""
 
-    def __init__(self, conv_out: int, kernel_size: int, stride: int, lstm_hidden: int):
+    def __init__(self, conv_out: int, lstm_hidden: int):
         super().__init__()
-        self.conv_out = conv_out
-        self.kernel_size = kernel_size
-        self.stride = stride
+        self.conv1 = nn.Conv1d(14, conv_out, kernel_size=5, stride=1, padding=1)
+        self.bn1 = nn.BatchNorm1d(conv_out)
+        self.conv2 = nn.Conv1d(conv_out, conv_out * 2, kernel_size=3, stride=2, padding=1)
+        self.bn2 = nn.BatchNorm1d(conv_out * 2)
 
-        self.conv1 = nn.Conv1d(14, conv_out, kernel_size, stride, padding=1)
-        self.conv2 = nn.Conv1d(conv_out, conv_out * 2, kernel_size - 2, stride, padding=1)
+        self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
 
-        self.pool = nn.MaxPool1d(kernel_size=2, stride=1)
-        pool_out = self._get_pool_output_shape()
-
-        self.lstm = nn.LSTM(conv_out * 2 * pool_out, lstm_hidden, 2, batch_first=True, dropout=0.2)
+        self.lstm = nn.LSTM(448, lstm_hidden, 2, batch_first=True, dropout=0.2)
+        self.tanh = nn.Tanh()
 
         self.fc1 = nn.Linear(lstm_hidden, 16)
         self.fc2 = nn.Linear(16, 8)
         self.fc3 = nn.Linear(8, 1)
 
-        self.tanh = nn.Tanh()
-        self.relu = nn.ReLU()
+        self.relu = nn.ReLU(inplace=True)
 
-    def forward(self, input: torch.Tensor):
-        input = self.conv1(input)
-        input = self.conv2(input)
-        input = self.pool(input)
 
-        input = input.view(input.size(0), -1)
-        input, _ = self.lstm(input)
-        input = self.tanh(input)
+    def forward(self, x: torch.Tensor):
+        x = self.conv1(x)
+        x = self.bn1(x)
+        x = self.relu(x)
 
-        input = self.fc1(input)
-        input = self.relu(input)
-        input = self.fc2(input)
-        input = self.relu(input)
-        output = self.fc3(input)
+        x = self.conv2(x)
+        x = self.bn2(x)
+        x = self.relu(x)
+        x = self.pool(x)
 
-        output = output.reshape(-1)
-        return output
+        x = x.view(x.size(0), -1)
+        x, _ = self.lstm(x)
+        x = self.tanh(x)
 
-    def _get_pool_output_shape(self):
-        """Get output shape of the pooling layer"""
-        conv1_out_dim: int = (self.conv_out - self.kernel_size) // self.stride + 1
-        conv2_out_dim: int = (conv1_out_dim + 2 - (self.kernel_size - 2)) // (self.stride) + 1
-        pool_out_dim: int = (conv2_out_dim - 2) // 1 + 1
-        return pool_out_dim
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.fc2(x)
+        x = self.relu(x)
+        x = self.fc3(x)
+
+        return x.reshape(-1)
