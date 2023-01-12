@@ -19,6 +19,8 @@ model:
   net:
     _target_: src.models.model.CNNLSTM
     conv_out: 32
+    kernel_size: 5
+    stride: 2
     lstm_hidden: 32
     kernel_size: 5
     stride: 1
