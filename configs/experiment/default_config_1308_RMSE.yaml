@@ -6,7 +6,7 @@ test: true
 ckpt_path: null
 seed: 42
 datamodule:
-  _target_: src.datamodules.cmapss_datamodule.CMAPSSDataModule
+  _target_: src.datamodules.cmapss.CMAPSSDataModule
   data_dir: ${paths.data_dir}
   fd: 1
   batch_size: 32

@@ -1,4 +1,4 @@
-_target_: src.data.datamodule.CMAPSSDataModule
+_target_: src.datamodules.cmapss.CMAPSSDataModule
 # init arguments
 data_dir: ${paths.data_dir}
 fd: 1
