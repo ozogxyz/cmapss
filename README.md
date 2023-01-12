@@ -1,8 +1,8 @@
-___________________________________________________________________________________________________________________________________________________________________________________
-
-# Hybrid Deep Learning Algorithms for Multivariate Time Series Forecasting (NASA C-MAPSS Benchmark)
+______________________________________________________________________
 
 <div align="center">
+
+# Hybrid Deep Learning Algorithms for Multivariate Time Series Forecasting <br> (NASA C-MAPSS Benchmark)</br>
 
 <a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white"></a>
 <a href="https://pytorchlightning.ai/"><img alt="Lightning" src="https://img.shields.io/badge/-Lightning-792ee5?logo=pytorchlightning&logoColor=white"></a>
@@ -12,7 +12,7 @@ ________________________________________________________________________________
 
 </div>
 
-___________________________________________________________________________________________________________________________________________________________________________________
+______________________________________________________________________
 
 ## Description
 
@@ -37,7 +37,7 @@ Data Set Citation: M. Chao, C.Kulkarni, K. Goebel and O. Fink (2021). "Aircraft 
 NASA Prognostics Data Repository, NASA Ames Research Center, Moffett Field, CA
 </div>
 
-___________________________________________________________________________________________________________________________________________________________________________________
+______________________________________________________________________
 
 ## Project Description
 
@@ -48,7 +48,7 @@ experiments and generate configuration files. The template has many loggers to c
 
 </div>
 
-___________________________________________________________________________________________________________________________________________________________________________________
+______________________________________________________________________
 
 ## How to run
 
