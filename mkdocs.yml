@@ -26,14 +26,14 @@ theme:
 
   palette:
     - scheme: default
-      primary: light green
-      accent: green
+      primary: light purple
+      accent: purple
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
     - scheme: slate
-      primary: green
-      accent: green
+      primary: dark purple
+      accent: purple
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
