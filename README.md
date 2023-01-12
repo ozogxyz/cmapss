@@ -1,4 +1,4 @@
-______________________________________________________________________
+___________________________________________________________________________________________________________________________________________________________________________________
 
 # Hybrid Deep Learning Algorithms for Multivariate Time Series Forecasting (NASA C-MAPSS Benchmark)
 
@@ -12,7 +12,7 @@ ______________________________________________________________________
 
 </div>
 
-______________________________________________________________________
+___________________________________________________________________________________________________________________________________________________________________________________
 
 ## Description
 
@@ -36,7 +36,8 @@ Download Mirror: https://phm-datasets.s3.amazonaws.com/NASA/17.+Turbofan+Engine+
 Data Set Citation: M. Chao, C.Kulkarni, K. Goebel and O. Fink (2021). "Aircraft Engine Run-to-Failure Dataset under real flight conditions",
 NASA Prognostics Data Repository, NASA Ames Research Center, Moffett Field, CA
 </div>
-______________________________________________________________________
+
+___________________________________________________________________________________________________________________________________________________________________________________
 
 ## Project Description
 
@@ -46,7 +47,8 @@ This project uses PyTorch Lightning powered rul-datasets to generate data sets. 
 experiments and generate configuration files. The template has many loggers to choose from including popular MLFlow and Weights and Biases.
 
 </div>
-______________________________________________________________________
+
+___________________________________________________________________________________________________________________________________________________________________________________
 
 ## How to run
 
