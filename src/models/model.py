@@ -4,11 +4,14 @@ import torch.nn as nn
 
 class CNNLSTM(nn.Module):
     """Experimental network for time series foreacasting."""
-    def __init__(self, conv_out: int, kernel_size: int, stride:int, lstm_hidden: int):
+
+    def __init__(self, conv_out: int, kernel_size: int, stride: int, lstm_hidden: int):
         super(CNNLSTM, self).__init__()
 
         self.conv1 = nn.Conv1d(14, conv_out, kernel_size, stride, padding=1)
-        self.conv2 = nn.Conv1d(conv_out, conv_out*2, kernel_size-2, stride, padding=1)
+        self.conv2 = nn.Conv1d(
+            conv_out, conv_out * 2, kernel_size - 2, stride, padding=1
+        )
 
         self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
 
@@ -16,8 +19,9 @@ class CNNLSTM(nn.Module):
         conv2_out_dim: int = (conv1_out_dim + 2 - (kernel_size - 2)) // (stride) + 1
         pool_out_dim: int = (conv2_out_dim - 2) // 2 + 1
 
-
-        self.lstm = nn.LSTM(conv_out * 2 * pool_out_dim, lstm_hidden, 2, batch_first=True, dropout=0.2)
+        self.lstm = nn.LSTM(
+            conv_out * 2 * pool_out_dim, lstm_hidden, 2, batch_first=True, dropout=0.2
+        )
 
         self.fc1 = nn.Linear(lstm_hidden, 16)
         self.fc2 = nn.Linear(16, 8)
