@@ -2,10 +2,10 @@ import torch
 import torch.nn as nn
 
 
-class ExpNet(nn.Module):
+class CNNLSTM(nn.Module):
     """Experimental network for time series foreacasting."""
     def __init__(self, conv_out: int, kernel_size: int, stride:int, lstm_hidden: int):
-        super(ExpNet, self).__init__()
+        super(CNNLSTM, self).__init__()
 
         self.conv1 = nn.Conv1d(14, conv_out, kernel_size, stride, padding=1)
         self.conv2 = nn.Conv1d(conv_out, conv_out*2, kernel_size-2, stride, padding=1)

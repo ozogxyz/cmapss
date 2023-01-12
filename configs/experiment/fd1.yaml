@@ -14,22 +14,28 @@ tags: ["train", "fd1"]
 seed: 42
 
 model:
+  optimizer:
+    lr: 0.001
   net:
-    _target_: src.models.components.experiment.ExpNet
+    _target_: src.models.model.CNNLSTM
     conv_out: 32
     kernel_size: 5
     stride: 2
     lstm_hidden: 32
+    kernel_size: 5
+    stride: 1
+
+trainer:
+  gradient_clip_val: 0.5
+
+extras:
+  print_config: True
 
 early_stopping:
-  min_delta: 0.1
-  patience: 3
-  verbose: False
   monitor: "val/rmse_best"
+  patience: 13
+  mode: "min"
 
 callbacks:
   model_summary:
-    max_depth: 0
-
-extras:
-  print_config: False
+   max_depth: 0
