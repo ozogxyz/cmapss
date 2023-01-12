@@ -1,4 +1,4 @@
-_target_: src.models.plmodule.PLModule
+_target_: src.modules.pl_module.PLModule
 
 optimizer:
   _target_: torch.optim.Adam
@@ -14,7 +14,8 @@ scheduler:
   patience: 10
 
 net:
-  _target_: src.models.components.cnnlstm_net.CNNLSTMNet
+  _target_: src.models.model.CNNLSTM
   conv_out: 32
   lstm_hidden: 32
-
+  kernel_size: 5
+  stride: 1

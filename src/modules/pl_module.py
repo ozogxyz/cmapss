@@ -1,8 +1,8 @@
-from typing import Any, Callable, Dict, List
+from typing import Any, Dict, List
 
 import torch
 from pytorch_lightning import LightningModule
-from torchmetrics import MinMetric, MeanMetric
+from torchmetrics import MeanMetric, MinMetric
 from torchmetrics.regression.mse import MeanSquaredError
 
 
@@ -72,7 +72,7 @@ class PLModule(LightningModule):
         self.train_loss(loss)
         self.train_rmse(preds, targets)
         self.log_dict(
-            {"train/loss": self.train_loss, "train/rmse": self.train_rmse},
+            {"train/loss": loss, "train/rmse": self.train_rmse},
         )
 
         return {"loss": loss, "preds": preds, "targets": targets}
@@ -84,7 +84,7 @@ class PLModule(LightningModule):
         self.val_loss(loss)
         self.val_rmse(preds, targets)
         self.log_dict(
-            {"val/loss": self.val_loss, "val/rmse": self.val_rmse},
+            {"val/loss": loss, "val/rmse": self.val_rmse},
         )
 
         return {"loss": loss, "preds": preds, "targets": targets}
@@ -103,7 +103,7 @@ class PLModule(LightningModule):
         self.test_loss(loss)
         self.test_rmse(preds, targets)
         self.log_dict(
-            {"test/loss": self.test_loss, "test/rmse": self.test_rmse},
+            {"test/loss": loss, "test/rmse": self.test_rmse},
         )
 
         return {"loss": loss, "preds": preds, "targets": targets}
