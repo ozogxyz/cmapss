@@ -1,7 +1,7 @@
 import pytest
 import torch
 
-from src.models.components.experiment import ExpNet
+from src.models.model import CNNLSTM
 
 
 @pytest.fixture
@@ -16,7 +16,7 @@ def batch_size():
 def test_conv_forward(
     batch_size: int, conv_out: int, kernel_size: int, stride: int, lstm_hidden: int
 ) -> None:
-    experiment_net = ExpNet(conv_out, kernel_size, stride, lstm_hidden)
+    model = CNNLSTM(conv_out, kernel_size, stride, lstm_hidden)
     input = torch.randn(batch_size, 14, 30)
-    output = experiment_net(input)
+    output = model(input)
     assert output.shape == torch.Size([batch_size])

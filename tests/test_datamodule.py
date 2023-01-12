@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from src.datamodules.cmapss_datamodule import CMAPSSDataModule
+from src.data.datamodule import CMAPSSDataModule
 
 
 @pytest.mark.parametrize("batch_size", [32])
