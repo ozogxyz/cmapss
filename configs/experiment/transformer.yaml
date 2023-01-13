@@ -1,0 +1,45 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=fd1
+
+defaults:
+  - override /callbacks: default.yaml
+  - override /datamodule: cmapss.yaml
+  - override /model: transformer.yaml
+  - override /trainer: default.yaml
+
+# all parameters below will be merged with parameters from default
+# configurations set above this allows you to overwrite only specified parameters
+tags: ["optuna_sweep"]
+
+seed: 42
+
+# optuna best performance 12.23 RMSE
+datamodule:
+  batch_size: 128
+model:
+  optimizer:
+    lr: 0.005
+    weight_decay: 0.017
+callbacks:
+  early_stopping:
+    _target_: pytorch_lightning.callbacks.EarlyStopping
+    monitor: val/rmse_best
+    min_delta: 0.5
+    patience: 3
+    verbose: false
+  model_summary:
+    max_depth: 0
+logger:
+  wandb:
+    _target_: pytorch_lightning.loggers.wandb.WandbLogger
+    project: cmapss-transformer
+    prefix: ""
+    group: cmapss
+    tags:
+      - transformer
+trainer:
+  accelerator: gpu
+extras:
+  print_config: false

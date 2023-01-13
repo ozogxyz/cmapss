@@ -24,7 +24,7 @@ hydra:
     storage: sqlite:///hparams.db
 
     # name of the study to persist optimization results
-    study_name: transformer
+    study_name: paper
 
     # number of parallel workers
     n_jobs: 10

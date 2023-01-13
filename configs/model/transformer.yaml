@@ -1,0 +1,23 @@
+_target_: src.modules.pl_module.PLModule
+
+optimizer:
+  _target_: torch.optim.Adam
+  _partial_: true
+  lr: 0.001
+  weight_decay: 0.0
+
+scheduler:
+  _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
+  _partial_: true
+  mode: min
+  factor: 0.1
+  patience: 10
+
+# optuna best model 12.23 RMSE
+net:
+  _target_: src.models.exp.CNNLSTMTransformer
+  nhead: 5
+  dim_feedforward: 420
+  num_encoder_layers: 1
+  lstm_hidden: 32
+  num_lstm_layers: 2
