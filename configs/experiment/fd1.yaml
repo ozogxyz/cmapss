@@ -32,7 +32,7 @@ model:
     factor: 0.1
     patience: 10
   net:
-    _target_: src.models.models.model.CNNLSTM
+    _target_: src.models.exp.CNNLSTMTransformer
     conv_out: 32
     lstm_hidden: 50
 
@@ -64,20 +64,20 @@ callbacks:
     stopping_threshold: null
     divergence_threshold: null
     check_on_train_epoch_end: null
-logger:
-  wandb:
-    _target_: pytorch_lightning.loggers.wandb.WandbLogger
-    save_dir: ${paths.output_dir}
-    offline: false
-    id: null
-    anonymous: null
-    project: lightning-hydra-template
-    log_model: true
-    prefix: rmse
-    group: fd1
-    tags:
-      - experiment
-    job_type: train
+# logger:
+  # wandb:
+  #   _target_: pytorch_lightning.loggers.wandb.WandbLogger
+  #   save_dir: ${paths.output_dir}
+  #   offline: false
+  #   id: null
+  #   anonymous: null
+  #   project: lightning-hydra-template
+  #   log_model: true
+  #   prefix: rmse
+  #   group: fd1
+  #   tags:
+  #     - experiment
+  #   job_type: train
 trainer:
   _target_: pytorch_lightning.Trainer
   default_root_dir: ${paths.output_dir}
