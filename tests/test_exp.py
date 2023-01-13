@@ -1,8 +1,9 @@
-import torch.nn as nn
-from torch import Tensor
-from src.models.exp import CNNLSTMTransformer
 import pytest
 import torch
+import torch.nn as nn
+from torch import Tensor
+
+from src.models.exp import CNNLSTMTransformer
 
 
 @pytest.fixture(autouse=True)
@@ -13,7 +14,7 @@ def input():
 @pytest.mark.parametrize("nhead", [6, 10])
 @pytest.mark.parametrize("dim_feedforward", [1024, 2048])
 @pytest.mark.parametrize("num_encoder_layers", [1, 2, 4])
-@pytest.mark.parametrize("lstm_hidden", [16, 32 ,50])
+@pytest.mark.parametrize("lstm_hidden", [16, 32, 50])
 @pytest.mark.parametrize("num_lstm_layers", [1, 2, 3])
 def test_cnn_lstm_transformer(
     input: Tensor,

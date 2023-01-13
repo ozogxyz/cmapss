@@ -1,6 +1,6 @@
 task_name: train
 tags:
-- optuna_sweep
+  - optuna_sweep
 train: true
 test: true
 ckpt_path: null
@@ -84,8 +84,8 @@ logger:
   wandb:
     _target_: pytorch_lightning.loggers.wandb.WandbLogger
     project: cmapss-transformer
-    prefix: ''
+    prefix: ""
     group: cmapss
     tags:
-    - transformer
+      - transformer
 optimized_metric: val/test_rmse
