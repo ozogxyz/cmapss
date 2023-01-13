@@ -1,1 +1,0 @@
-{"train/loss": 114.07623291015625, "train/rmse": 10.680647850036621, "epoch": 4, "trainer/global_step": 864, "_timestamp": 1673640977.3470693, "_runtime": 18.976730346679688, "_step": 25, "val/loss": 170.06800842285156, "val/rmse": 13.089653968811035, "val/rmse_best": 12.011617660522461, "test/loss": 180.69772338867188, "test/rmse": 13.44238567352295, "_wandb": {"runtime": 18}}

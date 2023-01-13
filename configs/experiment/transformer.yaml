@@ -34,6 +34,7 @@ callbacks:
 logger:
   wandb:
     _target_: pytorch_lightning.loggers.wandb.WandbLogger
+    save_dir: ${paths.log_dir}
     project: cmapss-transformer
     prefix: ""
     group: cmapss

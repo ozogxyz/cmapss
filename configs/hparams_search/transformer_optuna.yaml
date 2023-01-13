@@ -24,7 +24,7 @@ hydra:
     storage: sqlite:///hparams_transformer.db
 
     # name of the study to persist optimization results
-    study_name: transformer_64batch
+    study_name: transformer_128batch
 
     # number of parallel workers
     n_jobs: 10
@@ -45,12 +45,12 @@ hydra:
 
     # define hyperparameter search space
     params:
-      datamodule.batch_size: choice(64, 128)
-      model.optimizer.lr: interval(0.001, 0.005)
+      datamodule.batch_size: choice(128, 200, 256)
+      model.optimizer.lr: interval(0.001, 0.01)
       model.optimizer.weight_decay: interval(0.0, 0.05)
+      model.scheduler.factor: choice(0.1, 0.2)
       model.net.nhead: choice(2, 3, 5, 6)
-      model.net.dim_feedforward: choice(420, 512, 1024)
-      model.net.num_encoder_layers: choice(1)
-      model.net.lstm_hidden: choice(16, 32)
+      model.net.dim_feedforward: choice(210, 420)
+      model.net.num_encoder_layers: choice(1, 2)
+      model.net.lstm_hidden: choice(8, 16, 32)
       model.net.num_lstm_layers: choice(1, 2)
-      trainer.gradient_clip_val: choice(0.0, 0.1, 0.5)
