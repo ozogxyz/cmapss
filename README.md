@@ -44,7 +44,7 @@ ______________________________________________________________________
 
 <div align="justify">
 
-This project uses PyTorch Lightning powered ```rul-datasets``` to generate data sets. Hydra is an open source powerful utility to configure
+This project uses PyTorch Lightning powered `rul-datasets` to generate data sets. Hydra is an open source powerful utility to configure
 experiments and generate configuration files. The template has many loggers to choose from including popular MLFlow and Weights and Biases.
 
 </div>
@@ -73,7 +73,6 @@ pip install -r requirements.txt
 # rul-datasets library requires the environment variable RUL_DATASETS_DATA_ROOT to be set.
 export RUL_DATASETS_DATA_ROOT={path-to-project}/data
 ```
-
 
 Train model with default configuration
 
