@@ -32,7 +32,7 @@ model:
     factor: 0.1
     patience: 10
   net:
-    _target_: src.models.model.CNNLSTM
+    _target_: src.models.models.model.CNNLSTM
     conv_out: 32
     lstm_hidden: 50
 
