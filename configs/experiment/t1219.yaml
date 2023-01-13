@@ -1,30 +1,22 @@
-# @package _global_
-
-# to execute this experiment run:
-# python train.py experiment=fd1
-
-defaults:
-  - override /callbacks: default.yaml
-  - override /datamodule: cmapss.yaml
-  - override /model: default.yaml
-  - override /trainer: default.yaml
-
-# all parameters below will be merged with parameters from default
-# configurations set above this allows you to overwrite only specified parameters
-tags: ["optuna_sweep"]
-
+task_name: train
+tags:
+- optuna_sweep
+train: true
+test: true
+ckpt_path: null
 seed: 42
-
 datamodule:
+  _target_: src.datamodules.cmapss.CMAPSSDataModule
+  data_dir: ${paths.data_dir}
+  fd: 1
   batch_size: 64
-
 model:
   _target_: src.modules.pl_module.PLModule
   optimizer:
     _target_: torch.optim.Adam
     _partial_: true
-    lr: 0.008940400954986757
-    weight_decay: 0.009799143120957261
+    lr: 0.003010716092915446
+    weight_decay: 0.0025739375624994677
   scheduler:
     _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
     _partial_: true
@@ -32,10 +24,12 @@ model:
     factor: 0.1
     patience: 10
   net:
-    _target_: src.models.model.CNNLSTM
-    conv_out: 32
-    lstm_hidden: 50
-
+    _target_: src.models.exp.CNNLSTMTransformer
+    nhead: 3
+    dim_feedforward: 512
+    num_encoder_layers: 1
+    lstm_hidden: 16
+    num_lstm_layers: 1
 callbacks:
   model_checkpoint:
     _target_: pytorch_lightning.callbacks.ModelCheckpoint
@@ -55,37 +49,43 @@ callbacks:
   early_stopping:
     _target_: pytorch_lightning.callbacks.EarlyStopping
     monitor: val/rmse_best
-    min_delta: 0.1
+    min_delta: 0.5
     patience: 3
-    verbose: true
+    verbose: false
     mode: min
     strict: true
     check_finite: true
     stopping_threshold: null
     divergence_threshold: null
     check_on_train_epoch_end: null
-logger:
-  wandb:
-    _target_: pytorch_lightning.loggers.wandb.WandbLogger
-    save_dir: ${paths.output_dir}
-    offline: false
-    id: null
-    anonymous: null
-    project: lightning-hydra-template
-    log_model: true
-    prefix: rmse
-    group: fd1
-    tags:
-      - experiment
-    job_type: train
+  model_summary:
+    _target_: pytorch_lightning.callbacks.RichModelSummary
+    max_depth: 0
 trainer:
   _target_: pytorch_lightning.Trainer
   default_root_dir: ${paths.output_dir}
   min_epochs: 1
   max_epochs: 10
-  accelerator: cpu
+  accelerator: gpu
   devices: 1
   check_val_every_n_epoch: 1
   deterministic: true
+paths:
+  root_dir: ${oc.env:PROJECT_ROOT}
+  data_dir: ${oc.env:RUL_DATASETS_DATA_ROOT}
+  log_dir: ${paths.root_dir}/logs/
+  output_dir: ${hydra:runtime.output_dir}
+  work_dir: ${hydra:runtime.cwd}
 extras:
-  print_config: true
+  ignore_warnings: true
+  enforce_tags: true
+  print_config: false
+logger:
+  wandb:
+    _target_: pytorch_lightning.loggers.wandb.WandbLogger
+    project: cmapss-transformer
+    prefix: ''
+    group: cmapss
+    tags:
+    - transformer
+optimized_metric: val/test_rmse

@@ -1,0 +1,91 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=c1228
+
+defaults:
+  - override /callbacks: default.yaml
+  - override /datamodule: cmapss.yaml
+  - override /model: default.yaml
+  - override /trainer: default.yaml
+
+# all parameters below will be merged with parameters from default
+# configurations set above this allows you to overwrite only specified parameters
+tags: ["optuna_sweep"]
+
+seed: 42
+
+datamodule:
+  batch_size: 64
+
+model:
+  _target_: src.modules.pl_module.PLModule
+  optimizer:
+    _target_: torch.optim.Adam
+    _partial_: true
+    lr: 0.008940400954986757
+    weight_decay: 0.009799143120957261
+  scheduler:
+    _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
+    _partial_: true
+    mode: min
+    factor: 0.1
+    patience: 10
+  net:
+    _target_: src.models.model.CNNLSTM
+    conv_out: 32
+    lstm_hidden: 50
+
+callbacks:
+  model_checkpoint:
+    _target_: pytorch_lightning.callbacks.ModelCheckpoint
+    dirpath: ${paths.output_dir}/checkpoints
+    filename: epoch_{epoch:03d}
+    monitor: val/rmse
+    verbose: false
+    save_last: true
+    save_top_k: 1
+    mode: min
+    auto_insert_metric_name: false
+    save_weights_only: false
+    every_n_train_steps: null
+    train_time_interval: null
+    every_n_epochs: null
+    save_on_train_epoch_end: null
+  early_stopping:
+    _target_: pytorch_lightning.callbacks.EarlyStopping
+    monitor: val/rmse_best
+    min_delta: 0.1
+    patience: 3
+    verbose: true
+    mode: min
+    strict: true
+    check_finite: true
+    stopping_threshold: null
+    divergence_threshold: null
+    check_on_train_epoch_end: null
+logger:
+  wandb:
+    _target_: pytorch_lightning.loggers.wandb.WandbLogger
+    save_dir: ${paths.output_dir}
+    offline: false
+    id: null
+    anonymous: null
+    project: lightning-hydra-template
+    log_model: true
+    prefix: rmse
+    group: fd1
+    tags:
+      - experiment
+    job_type: train
+trainer:
+  _target_: pytorch_lightning.Trainer
+  default_root_dir: ${paths.output_dir}
+  min_epochs: 1
+  max_epochs: 10
+  accelerator: cpu
+  devices: 1
+  check_val_every_n_epoch: 1
+  deterministic: true
+extras:
+  print_config: true
