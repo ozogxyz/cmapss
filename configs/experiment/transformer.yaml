@@ -19,17 +19,15 @@ seed: 42
 datamodule:
   batch_size: 64
 model:
+  optimizer:
+    lr: 0.003
+    weight_decay: 0.002
   net:
     nhead: 3
     dim_feedforward: 512
     num_encoder_layers: 1
     lstm_hidden: 16
     num_lstm_layers: 1
-  optimizer:
-    lr: 0.003
-    weight_decay: 0.002
-  scheduler:
-    factor: 0.1
 callbacks:
   early_stopping:
     _target_: pytorch_lightning.callbacks.EarlyStopping
@@ -39,17 +37,8 @@ callbacks:
     verbose: true
   model_summary:
     max_depth: 0
-# logger:
-#   wandb:
-#     _target_: pytorch_lightning.loggers.wandb.WandbLogger
-#     save_dir: ${paths.log_dir}
-#     project: cmapss-transformer
-#     prefix: ""
-#     group: cmapss
-#     tags:
-#       - transformer
 trainer:
   accelerator: gpu
-  max_epochs: 30
+  max_epochs: 10
 extras:
-  print_config: false
+  print_config: true
