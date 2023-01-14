@@ -24,12 +24,8 @@ class Transformer(nn.Module):
             dropout=dropout,
             batch_first=True,
         )
-        self.encoder = TransformerEncoder(
-            encoder_layer, num_layers=num_encoder_layers
-        )
-        self.lstm = nn.LSTM(
-            420, lstm_hidden, num_lstm_layers, batch_first=True, dropout=0.2
-        )
+        self.encoder = TransformerEncoder(encoder_layer, num_layers=num_encoder_layers)
+        self.lstm = nn.LSTM(420, lstm_hidden, num_lstm_layers, batch_first=True, dropout=0.2)
         self.tanh = nn.Tanh()
         self.fc1 = nn.Linear(lstm_hidden, 16)
         self.fc2 = nn.Linear(16, 8)
