@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.nn import TransformerEncoder, TransformerEncoderLayer
 
 
-class CNNLSTMTransformer(nn.Module):
+class Transformer(nn.Module):
     """Experimental network for multi variate time series foreacasting."""
 
     def __init__(

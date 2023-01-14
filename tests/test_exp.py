@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
-from src.models.exp import CNNLSTMTransformer
+from src.models.exp import Transformer
 
 
 @pytest.fixture(autouse=True)
@@ -24,7 +24,7 @@ def test_cnn_lstm_transformer(
     lstm_hidden: int,
     num_lstm_layers: int,
 ) -> None:
-    model = CNNLSTMTransformer(
+    model = Transformer(
         nhead=nhead,
         dim_feedforward=dim_feedforward,
         num_encoder_layers=num_encoder_layers,
