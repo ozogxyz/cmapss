@@ -16,11 +16,19 @@ class CNNLSTMTransformer(nn.Module):
     ):
         super().__init__()
         encoder_layer = TransformerEncoderLayer(
-            d_model=30, nhead=nhead, dim_feedforward=dim_feedforward, batch_first=True
+            d_model=30,
+            nhead=nhead,
+            dim_feedforward=dim_feedforward,
+            activation='gelu',
+            batch_first=True,
         )
-        self.encoder = TransformerEncoder(encoder_layer, num_layers=num_encoder_layers)
+        self.encoder = TransformerEncoder(
+            encoder_layer, num_layers=num_encoder_layers
+        )
 
-        self.lstm = nn.LSTM(420, lstm_hidden, num_lstm_layers, batch_first=True, dropout=0.2)
+        self.lstm = nn.LSTM(
+            420, lstm_hidden, num_lstm_layers, batch_first=True, dropout=0.2
+        )
         self.tanh = nn.Tanh()
 
         self.fc1 = nn.Linear(lstm_hidden, 16)
