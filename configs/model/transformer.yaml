@@ -21,3 +21,4 @@ net:
   num_encoder_layers: 1
   lstm_hidden: 32
   num_lstm_layers: 2
+  dropout: 0.1
