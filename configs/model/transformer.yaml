@@ -15,7 +15,7 @@ scheduler:
 
 # optuna best model 12.23 RMSE
 net:
-  _target_: src.models.exp.CNNLSTMTransformer
+  _target_: src.models.exp.Transformer
   nhead: 5
   dim_feedforward: 420
   num_encoder_layers: 1

@@ -24,7 +24,7 @@ model:
     factor: 0.1
     patience: 10
   net:
-    _target_: src.models.exp.CNNLSTMTransformer
+    _target_: src.models.exp.Transformer
     nhead: 3
     dim_feedforward: 512
     num_encoder_layers: 1
