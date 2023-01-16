@@ -15,9 +15,9 @@ tags: ["optuna_sweep"]
 
 seed: 42
 
-# optuna best performance 11.49 RMSE
+# optuna best performance 12.23 RMSE
 datamodule:
-  max_rul: 125
+  max_rul: 1
   batch_size: 64
 model:
   optimizer:
@@ -34,7 +34,7 @@ callbacks:
     _target_: pytorch_lightning.callbacks.EarlyStopping
     monitor: val/rmse_best
     min_delta: 0.5
-    patience: 1
+    patience: 3
     verbose: true
   model_summary:
     max_depth: 0
@@ -42,18 +42,4 @@ trainer:
   accelerator: cpu
   max_epochs: 10
 extras:
-  print_config: false
-# logger:
-#   wandb:
-#     _target_: pytorch_lightning.loggers.wandb.WandbLogger
-#     save_dir: ${paths.log_dir}
-#     project: cmapss-transformer
-#     prefix: ""
-#     group: cmapss
-#     tags:
-#       - transformer
-hparams_search:
-  transformer_optuna:
-    hydra:
-      sweeper:
-        study_name: transformer_encoder
+  print_config: true

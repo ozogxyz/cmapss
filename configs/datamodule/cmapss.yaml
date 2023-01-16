@@ -2,4 +2,5 @@ _target_: src.datamodules.cmapss.CMAPSSDataModule
 # init arguments
 data_dir: ${paths.data_dir}
 fd: 1
+max_rul: 100
 batch_size: 32

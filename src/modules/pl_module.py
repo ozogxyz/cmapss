@@ -5,6 +5,7 @@ from pytorch_lightning import LightningModule
 from torchmetrics import MeanMetric, MinMetric
 from torchmetrics.regression.mse import MeanSquaredError
 
+import yaml
 
 class PLModule(LightningModule):
     """Example of LightningModule for CMAPSS-RUL estimation.

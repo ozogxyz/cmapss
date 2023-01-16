@@ -5,7 +5,7 @@ defaults:
   - datamodule: cmapss.yaml # choose datamodule with `test_dataloader()` for evaluation
   - model: default.yaml
   - logger: null
-  - trainer: mps.yaml
+  - trainer: default.yaml
   - paths: default.yaml
   - extras: default.yaml
   - hydra: default.yaml

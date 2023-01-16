@@ -1,0 +1,97 @@
+task_name: train
+tags:
+- optuna_sweep
+train: true
+test: true
+ckpt_path: null
+seed: 42
+datamodule:
+  _target_: src.datamodules.cmapss.CMAPSSDataModule
+  data_dir: ${paths.data_dir}
+  fd: 1
+  batch_size: 64
+model:
+  _target_: src.modules.pl_module.PLModule
+  optimizer:
+    _target_: torch.optim.Adam
+    _partial_: true
+    lr: 0.003
+    weight_decay: 0.002
+  scheduler:
+    _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
+    _partial_: true
+    mode: min
+    factor: 0.1
+    patience: 10
+  net:
+    _target_: src.models.exp.CNNLSTMTransformer
+    nhead: 3
+    dim_feedforward: 512
+    num_encoder_layers: 1
+    lstm_hidden: 16
+    num_lstm_layers: 1
+    dropout: 0.1
+callbacks:
+  model_checkpoint:
+    _target_: pytorch_lightning.callbacks.ModelCheckpoint
+    dirpath: ${paths.output_dir}/checkpoints
+    filename: epoch_{epoch:03d}
+    monitor: val/rmse
+    verbose: false
+    save_last: true
+    save_top_k: 1
+    mode: min
+    auto_insert_metric_name: false
+    save_weights_only: false
+    every_n_train_steps: null
+    train_time_interval: null
+    every_n_epochs: null
+    save_on_train_epoch_end: null
+  early_stopping:
+    _target_: pytorch_lightning.callbacks.EarlyStopping
+    monitor: val/rmse_best
+    min_delta: 0.5
+    patience: 1
+    verbose: true
+    mode: min
+    strict: true
+    check_finite: true
+    stopping_threshold: null
+    divergence_threshold: null
+    check_on_train_epoch_end: null
+  model_summary:
+    _target_: pytorch_lightning.callbacks.RichModelSummary
+    max_depth: 0
+trainer:
+  _target_: pytorch_lightning.Trainer
+  default_root_dir: ${paths.output_dir}
+  min_epochs: 1
+  max_epochs: 10
+  accelerator: gpu
+  devices: 1
+  check_val_every_n_epoch: 1
+  deterministic: true
+paths:
+  root_dir: ${oc.env:PROJECT_ROOT}
+  data_dir: ${oc.env:RUL_DATASETS_DATA_ROOT}
+  log_dir: ${paths.root_dir}/logs/
+  output_dir: ${hydra:runtime.output_dir}
+  work_dir: ${hydra:runtime.cwd}
+extras:
+  ignore_warnings: true
+  enforce_tags: true
+  print_config: false
+logger:
+  wandb:
+    _target_: pytorch_lightning.loggers.wandb.WandbLogger
+    save_dir: ${paths.log_dir}
+    project: cmapss-transformer
+    prefix: ''
+    group: cmapss
+    tags:
+    - transformer
+hparams_search:
+  transformer_optuna:
+    hydra:
+      sweeper:
+        study_name: transformer_encoder
