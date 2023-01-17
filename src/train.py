@@ -1,4 +1,5 @@
 import pyrootutils
+from torchinfo import summary
 
 root = pyrootutils.setup_root(
     search_from=__file__,
@@ -69,6 +70,9 @@ def train(cfg: DictConfig) -> Tuple[dict, dict]:
 
     log.info(f"Instantiating model <{cfg.model._target_}>")
     model: LightningModule = hydra.utils.instantiate(cfg.model)
+
+    col_names = ("output_size", "output_size", "num_params", "mult_adds")
+    summary(model=model, input_size=(32, 14, 30), col_names=col_names)
 
     log.info("Instantiating callbacks...")
     callbacks: List[Callback] = utils.instantiate_callbacks(cfg.get("callbacks"))
